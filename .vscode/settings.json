@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b44762b6-7759-4467-b8b0-1c21286a6226/resourceGroups/Woneder-woman_group/providers/Microsoft.Web/sites/Woneder-woman",
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}
