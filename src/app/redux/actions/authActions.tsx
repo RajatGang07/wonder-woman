@@ -3,6 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const backendURL = 'https://thunder-bird.azurewebsites.net'
 
+// const backendURL = 'http://localhost:8080'
+
 export const registerUser: any = createAsyncThunk(
   'auth/register',
   async ({ firstName, email, password }: any, { rejectWithValue }) => {
@@ -13,8 +15,8 @@ export const registerUser: any = createAsyncThunk(
         },
       }
       await axios.post(
-        `${backendURL}/api/v1/users`,
-        { firstName, email, password },
+        `${backendURL}/api/v1/login`,
+        {  email, password },
         config
       )
     } catch (error: any) {

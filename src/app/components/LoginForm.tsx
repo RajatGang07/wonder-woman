@@ -22,7 +22,7 @@ const LoginForm = () => {
     defaultValues: { email: "", password: "" },
   });
   const login = (values: FormData) => {
-    const data = { userName: values.email, password: values.password };
+    const data = { email: values.email, password: values.password };
     dispatch(registerUser(data))
 
     console.log(data);
