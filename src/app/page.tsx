@@ -8,7 +8,7 @@ const TabsPage = () => {
       <br />
 
       {/* Tabs Component */}
-      <TabsComponent items={items} />
+      {/* <TabsComponent items={items} />  */}
     </div>
   );
 };

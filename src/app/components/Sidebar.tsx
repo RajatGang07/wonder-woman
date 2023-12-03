@@ -41,7 +41,7 @@ export default function Sidebar({ show, setter }: any) {
         <div className="p-2 flex">
           <Link href="/">
             {/*eslint-disable-next-line*/}
-            <img src={logo.src} alt="Company Logo" width={300} height={300} />
+            <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"  alt="Company Logo" width={100} height={100} />
           </Link>
         </div>
         <div

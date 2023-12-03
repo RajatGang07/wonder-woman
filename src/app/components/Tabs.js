@@ -32,7 +32,7 @@ const TabsComponent = ({ items }) => {
             <div key={index} className={`${selectedTab === index ? '' : 'hidden'}`}>
               {item.content}
             </div>
-          ))}
+          ))} 
         </div>
       </div>
     </div>
