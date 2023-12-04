@@ -12,6 +12,7 @@ const Dashboard = ({ children }: any) => {
     authData = localStorage.getItem("auth");
   }
 
+  console.log('typeof window !== "undefined" && JSON?.parse(authData)?.token', typeof window !== "undefined" && JSON?.parse(authData)?.token)
   return (
     <>
       {typeof window !== "undefined" && JSON?.parse(authData)?.token ? (

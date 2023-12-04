@@ -20,13 +20,12 @@ const TabsComponent = () => {
             onClick={handleNavigate("/dataSource")}
             onKeyDown={handleNavigate("/dataSource")}
           >
-            <button
-              type="button"
+            <div
               className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900"
               aria-expanded="false"
             >
               Select Data Source
-            </button>
+            </div>
           </div>
 
           <div
