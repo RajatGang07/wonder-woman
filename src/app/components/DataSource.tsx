@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 
 export default function DataSource() {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState<any>(null);
 
   const options = [
     { value: "facebook", label: "Facebook" },
