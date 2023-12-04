@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/provider";
 import "./globals.css";
-import NavBar from "./navbar/navbar";
-import Sidebar from "./components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +15,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // console.log('window', window)
   return (
     <html lang="en">
       <body className={inter.className}>

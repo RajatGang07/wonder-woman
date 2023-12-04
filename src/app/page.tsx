@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import NavBar from "./navbar/navbar";
 import Sidebar from "./components/Sidebar";
@@ -7,7 +7,10 @@ import { redirect } from "next/navigation";
 import TabsComponent from "./components/Tabs";
 
 const Dashboard = ({ children }: any) => {
-  const authData: any = localStorage.getItem("auth");
+  let authData: any = {};
+  if (typeof window !== "undefined") {
+    authData = localStorage.getItem("auth");
+  }
 
   return (
     <>
