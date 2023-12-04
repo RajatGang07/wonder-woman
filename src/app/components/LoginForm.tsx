@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import Link from "next/link";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from 'react-redux'
-import { registerUser } from "../redux/actions/authActions";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import {loginAsync,} from "../redux/reducers/authSlice";
 
 interface FormData {
   email: string;
@@ -11,21 +12,20 @@ interface FormData {
 }
 
 const LoginForm = () => {
-  const dispatch = useDispatch()
-  const a= useSelector(
-    (state: any) => state.auth
-  )
-
-  console.log('userInfo', a);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const { handleSubmit, register, setError } = useForm<FormData>({
     defaultValues: { email: "", password: "" },
   });
   const login = (values: FormData) => {
     const data = { email: values.email, password: values.password };
-    dispatch(registerUser(data))
-
-    console.log(data);
+    dispatch(loginAsync(data)).then((res: any) => {
+      if (res?.payload?.data?.token) {
+        router.push("/");
+        localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
+      }
+    });
   };
 
   return (
