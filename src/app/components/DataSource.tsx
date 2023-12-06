@@ -60,9 +60,6 @@ console.log('session', session)
     // console.log("response", response);
   };
 
-  const responseFacebook = (response: any) => {
-    console.log(response);
-}
 
   return (
     <div className="flex  items-center ml-[300px] pb-8 gap-4">
