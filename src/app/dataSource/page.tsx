@@ -8,7 +8,7 @@ import DataSource from '../components/DataSource';
 export default function DataSourcePage() {
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <Sidebar />
       <TabsComponent />
       <DataSource />

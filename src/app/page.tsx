@@ -16,7 +16,7 @@ const Dashboard = ({ children }: any) => {
     <>
       {typeof window !== "undefined" && JSON?.parse(authData)?.token ? (
         <>
-          <NavBar />
+          {/* <NavBar /> */}
           <Sidebar />
           <TabsComponent />
         </>

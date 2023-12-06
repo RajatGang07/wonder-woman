@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/provider";
 import "./globals.css";
+import AuthProvider from "./context/AuthProvider";
+import NavBar from "./navbar/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
       <body className={inter.className}>
         <Providers>
+        <AuthProvider>
+        <NavBar />
           {children}
+          </AuthProvider>
         </Providers>
       </body>
     </html>
