@@ -4,9 +4,6 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { redirect } from 'next/navigation'
 
-// import {LoginSocialFacebook} from 'reactjs-social-login';
-// import {FacebookLoginButton} from 'react-social-login-buttons';
-// import  FacebookLogin  from 'react-facebook-login';
 import { useSession } from 'next-auth/react'
 
 export default function DataSource() {
@@ -76,17 +73,6 @@ console.log('session', session)
         onChange={handleSelectedOption}
         options={options}
       />
-
-      {/* <FacebookLogin
-        appId="1361038827821051"
-        autoLoad={false}
-        config_id="740411677946087"
-        fields="name,email,picture"
-        // onClick={componentClicked}
-        callback={responseFacebook}
-        > */}
-            {/* <FacebookLoginButton /> */}
-        {/* </FacebookLogin> */}
     </div>
   );
 }
