@@ -1,10 +1,7 @@
 "use client";
-import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 const TabsComponent = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
-  const firstBtnRef = useRef();
 
   const router = useRouter();
 
@@ -36,8 +33,8 @@ const TabsComponent = () => {
             Authorize
           </div>
           <div
-            onClick={handleNavigate("/attributes")}
-            onKeyDown={handleNavigate("/attributes")}
+            onClick={handleNavigate("/selectAttributes")}
+            onKeyDown={handleNavigate("/selectAttributes")}
             className="text-sm font-semibold leading-6 text-gray-900"
           >
             Select Attributes

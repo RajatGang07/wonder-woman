@@ -5,8 +5,9 @@ import { redirect } from "next/navigation"
 export default async function ServerPage() {
     const session = await getServerSession(options)
 
+    console.log('getServerSession', session)
     if (!session) {
-        redirect('https://wakanda-forever.azurewebsites.net/api/auth/signin?callbackUrl=/server')
+        redirect('http://localhost:3000/api/auth/signin?callbackUrl=/server')
     }
 
     return (

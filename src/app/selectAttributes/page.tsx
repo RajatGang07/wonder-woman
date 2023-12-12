@@ -3,15 +3,15 @@ import Image from "next/image";
 import NavBar from "../navbar/navbar";
 import Sidebar from "../components/Sidebar";
 import TabsComponent from "../components/Tabs";
-import DataSource from '../components/dataSource';
+import SelectAttribute from '../components/selectAttribute';
 
-export default function DataSourcePage() {
+export default function SelectAttributePage() {
   return (
     <div>
       {/* <NavBar /> */}
       <Sidebar />
       <TabsComponent />
-      <DataSource />
+      <SelectAttribute />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import {loginAsync,} from "../redux/reducers/authSlice";
+import { loginAsync } from "../redux/reducers/authSlice";
 
 interface FormData {
   email: string;

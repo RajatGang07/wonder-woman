@@ -1,18 +1,18 @@
-// slices/authSlice.js
+// slices/adAccountSlice.js
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  adAccounts: null,
   isAuthenticated: false,
   status: "idle",
   error: null,
 };
 const backendURL = "http://localhost:8080";
 
-export const loginAsync: any = createAsyncThunk(
-  "auth/login",
+export const adAccountAsync: any = createAsyncThunk(
+  "adAccount/",
   async (credentials, { rejectWithValue }) => {
     try {
       const config = {
@@ -21,7 +21,7 @@ export const loginAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/login`,
+        `${backendURL}/api/integrations/facebook_ads/ad_accounts`,
         credentials,
         config
       );
@@ -36,35 +36,35 @@ export const loginAsync: any = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
-  name: "auth",
+const adAccountSlice = createSlice({
+  name: "adAccount",
   initialState,
   reducers: {
     logout: (state: any) => {
-      state.user = null;
+      state.adAccounts = null;
       state.isAuthenticated = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginAsync.pending, (state: any) => {
+      .addCase(adAccountAsync.pending, (state: any) => {
         state.status = "loading";
       })
-      .addCase(loginAsync.fulfilled, (state: any, action: any) => {
+      .addCase(adAccountAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        state.user = action.payload.data;
+        state.adAccounts = action.payload.data.response.data;
       })
-      .addCase(loginAsync.rejected, (state: any, action: any) => {
+      .addCase(adAccountAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.error = action.payload;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
-export const selectUser = (state: any) => state.auth.user;
-export const selectIsAuthenticated = (state: any) => state.auth.isAuthenticated;
+export const { logout } = adAccountSlice.actions;
+export const selectadAccounts = (state: any) => state.adAccount.adAccounts;
+export const selectIsAuthenticated = (state: any) => state.adAccount.isAuthenticated;
 
 
-export default authSlice.reducer;
+export default adAccountSlice.reducer;

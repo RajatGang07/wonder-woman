@@ -6,12 +6,13 @@ import Sidebar from "./components/Sidebar";
 import { redirect } from "next/navigation";
 import TabsComponent from "./components/Tabs";
 
-const Dashboard = ({ children }: any) => {
+const Dashboard = (props: any) => {
   let authData: any = '';
   if (typeof window !== "undefined") {
     authData = localStorage.getItem("auth");
   }
 
+  console.log(props)
   return (
     <>
       {typeof window !== "undefined" && JSON?.parse(authData)?.token ? (

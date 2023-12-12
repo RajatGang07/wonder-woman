@@ -1,18 +1,16 @@
-// slices/authSlice.js
+// slices/facebookCred.js
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-  user: null,
-  isAuthenticated: false,
+const initialState: any = {
   status: "idle",
   error: null,
 };
 const backendURL = "http://localhost:8080";
 
-export const loginAsync: any = createAsyncThunk(
-  "auth/login",
+export const facebookAsync: any = createAsyncThunk(
+  "facebook/cred",
   async (credentials, { rejectWithValue }) => {
     try {
       const config = {
@@ -21,7 +19,7 @@ export const loginAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/login`,
+        `${backendURL}/api/save/fb`,
         credentials,
         config
       );
@@ -36,35 +34,35 @@ export const loginAsync: any = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
-  name: "auth",
+const facebookCredSlice = createSlice({
+  name: "facebookCred",
   initialState,
   reducers: {
     logout: (state: any) => {
-      state.user = null;
+      state.name = null;
       state.isAuthenticated = false;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginAsync.pending, (state: any) => {
+      .addCase(facebookAsync.pending, (state: any) => {
         state.status = "loading";
       })
-      .addCase(loginAsync.fulfilled, (state: any, action: any) => {
+      .addCase(facebookAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        state.isAuthenticated = true;
-        state.user = action.payload.data;
+        // state.isAuthenticated = true;
+        // state.name = action.payload.data;
       })
-      .addCase(loginAsync.rejected, (state: any, action: any) => {
+      .addCase(facebookAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.error = action.payload;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
-export const selectUser = (state: any) => state.auth.user;
+export const { logout } = facebookCredSlice.actions;
+export const selectname = (state: any) => state.auth.name;
 export const selectIsAuthenticated = (state: any) => state.auth.isAuthenticated;
 
 
-export default authSlice.reducer;
+export default facebookCredSlice.reducer;
