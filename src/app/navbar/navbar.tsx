@@ -1,6 +1,7 @@
 "use client";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 import { logout } from "../redux/reducers/authSlice";
 
@@ -8,10 +9,14 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout);
-    localStorage.removeItem("auth");
-    router.push("/login");
+    await signOut({ redirect: false }).then(() => {
+      localStorage.removeItem("auth");
+      localStorage.clear();
+      router.push("/login");
+      localStorage.removeItem("nextauth.message");
+    });
   };
   return (
     <header className="bg-white">

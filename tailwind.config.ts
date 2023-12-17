@@ -11,6 +11,9 @@ const config: Config = {
       width: {
         '70' : '70%'
       },
+      minwidth:{
+          "min-width": "300px"
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
