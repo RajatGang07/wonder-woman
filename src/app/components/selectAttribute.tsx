@@ -213,7 +213,7 @@ export default function SelectAttribute(props: any) {
 
   const handleSetDataAndMoveToNext = () => {
     dispatch(setSelectedKeysInfo(selectedKeys));
-    
+
     router.push("/schedule");
   };
 
@@ -395,13 +395,13 @@ export default function SelectAttribute(props: any) {
         <div className="inline-flex justify-end">
           <button
             onClick={() => router.push("/authorize")}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+            className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
           >
             Prev
           </button>
           <button
             onClick={handleSetDataAndMoveToNext}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
           >
             Next
           </button>

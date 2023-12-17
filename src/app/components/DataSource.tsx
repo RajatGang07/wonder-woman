@@ -103,7 +103,7 @@ export default function DataSource(props: any) {
       <div className="inline-flex justify-end">
         <button
           onClick={handleSetDataAndMoveToNext}
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+          className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
         >
           Next
         </button>
