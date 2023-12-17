@@ -2,17 +2,19 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 import { SlHome } from "react-icons/sl";
 import { FaTshirt, FaRedhat } from "react-icons/fa";
+import Logo from "../assets/Logo1.png";
 
-import logo from "../logo.svg";
+// import logo from "../logo.svg";
 
 export default function Sidebar({ show, setter }: any) {
   const router: any = useRouter();
 
   const className =
-    "bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed top-0 bottom-0 left-0 z-40";
+    " w-[250px] transition-[margin-left] ease-in-out duration-500 fixed top-0 bottom-0 left-0 z-40";
   const appendClass = show ? " ml-0" : " ml-[-250px] md:ml-0";
 
   const MenuItem = ({ icon, name, route }: any) => {
@@ -37,11 +39,17 @@ export default function Sidebar({ show, setter }: any) {
 
   return (
     <>
-      <div className={`${className}${appendClass}`}>
+      <div className={`${className}${appendClass} bg-orange-300`}>
         <div className="p-2 flex">
           <Link href="/">
             {/*eslint-disable-next-line*/}
-            <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"  alt="Company Logo" width={100} height={100} />
+            <Image
+              src={Logo}
+              alt="Picture of the author"
+              width={250}
+              height={150}
+            />
+            {/* <img src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"  alt="Company Logo" width={100} height={100} /> */}
           </Link>
         </div>
         <div
