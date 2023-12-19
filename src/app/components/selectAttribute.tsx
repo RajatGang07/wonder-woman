@@ -251,7 +251,7 @@ export default function SelectAttribute(props: any) {
 
               <Select
                 options={adInsights}
-                onChange={handleChange("adInsights")}
+                onChange={handleChange("selectedAdInsights")}
                 value={selectedKeys?.selectedAdInsights}
                 isMulti
               />
@@ -275,7 +275,7 @@ export default function SelectAttribute(props: any) {
                 options={campaignInsights}
                 isMulti
                 value={selectedKeys?.selectedCampaignInsights}
-                onChange={handleChange("campaignInsights")}
+                onChange={handleChange("selectedCampaignInsights")}
               />
             </div>
           </div>
@@ -297,7 +297,7 @@ export default function SelectAttribute(props: any) {
                 isMulti
                 options={adSetInsights}
                 value={selectedKeys?.selectedAdSetInsights}
-                onChange={handleChange("adSetInsights")}
+                onChange={handleChange("selectedAdSetInsights")}
               />
             </div>
           </div>
@@ -319,7 +319,7 @@ export default function SelectAttribute(props: any) {
                 isMulti
                 options={accountLevel}
                 value={selectedKeys?.selectedAccountLevel}
-                onChange={handleChange("accountLevel")}
+                onChange={handleChange("selectedAccountLevel")}
               />
             </div>
           </div>
@@ -341,7 +341,7 @@ export default function SelectAttribute(props: any) {
                 options={creativeLevel}
                 isMulti
                 value={selectedKeys?.selectedCreativeLevel}
-                onChange={handleChange("creativeLevel")}
+                onChange={handleChange("selectedCreativeLevel")}
               />
             </div>
           </div>
@@ -362,7 +362,7 @@ export default function SelectAttribute(props: any) {
               <Select
                 options={adSetLevel}
                 value={selectedKeys?.selectedAdSetLevel}
-                onChange={handleChange("adSetLevel")}
+                onChange={handleChange("selectedAdSetLevel")}
                 isMulti
               />
             </div>
@@ -385,7 +385,7 @@ export default function SelectAttribute(props: any) {
                 isMulti
                 options={campaignFields}
                 value={selectedKeys?.selectedCampaignFields}
-                onChange={handleChange("campaignFields")}
+                onChange={handleChange("selectedCampaignFields")}
               />
             </div>
           </div>

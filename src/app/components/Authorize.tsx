@@ -92,7 +92,6 @@ export default function DataSource() {
       accessToken: session?.accessToken,
       image: session?.user?.image,
     };
-    debugger
     dispatch(facebookAsync(params)).then((res: any) => {
       if (res?.payload?.data?.token) {
         router.push("/");
