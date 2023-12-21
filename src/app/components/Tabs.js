@@ -1,13 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const TabsComponent = () => {
-
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState("dataSource");
 
   const handleNavigate = (route) => () => {
+    setActiveTab(route)
     router.push(route);
   };
+  
   return (
     <div className="flex  items-center ml-[300px] pb-8">
       <div className="flex flex-col gap-y-2 w-70">
@@ -38,6 +41,13 @@ const TabsComponent = () => {
             className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
           >
             Select Attributes
+          </div>
+          <div
+            onClick={handleNavigate("/configListing")}
+            onKeyDown={handleNavigate("/configListing")}
+            className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
+          >
+            Config Listing
           </div>
           <div
             onClick={handleNavigate("/schedule")}

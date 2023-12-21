@@ -9,6 +9,8 @@ import { useSession } from "next-auth/react";
 import { adAccountAsync } from "../redux/reducers/adAccounts";
 import { adCampaignAccountAsync } from "../redux/reducers/adCampaigns";
 import { setSelectedKeysInfo } from "../redux/reducers/storeFacebookInfo";
+import { facebookConfigAsync } from "../redux/reducers/saveFacebookConfig";
+import { configCron, days, FIELDS } from "./constant";
 
 export default function SelectAttribute(props: any) {
   const [selectedOption, setSelectedOption] = useState<any>(null);
@@ -20,9 +22,9 @@ export default function SelectAttribute(props: any) {
   const [accountLevel, setAccountLevel] = useState([]);
   const [creativeLevel, setCreativeLevel] = useState([]);
   const [adSetLevel, setAdSetLevel] = useState([]);
-  const [campaignFields, setCampaignFields] = useState([]);
+  const [adSetFields, setAdSetFields] = useState([]);
 
-  const [selectedKeys, setSelectedKeys] = useState({
+  const [selectedKeys, setSelectedKeys] = useState<any>({
     account: "",
     campaign: [],
     userId: "",
@@ -32,41 +34,18 @@ export default function SelectAttribute(props: any) {
     selectedAccountLevel: [],
     selectedCreativeLevel: [],
     selectedAdSetLevel: [],
-    selectedCampaignFields: [],
+    selectedAdSetFields: [],
+    configDays: {
+      label: "Months",
+      value: "Months",
+    },
+    selectedDays: [],
+    cron: "0 0 28-31 * *", //  job will run every day from the 28th to the 31st day of the month at midnight (0:00).
   });
   const [options, setOptions] = useState({
     accounts: [],
     campaigns: [],
-    fields: [
-      {
-        label: "Ad Insights",
-        value: "facebook-ad-insights",
-      },
-      {
-        label: "Campaign Insights",
-        value: "facebook-campaign-insights",
-      },
-      {
-        label: "AdSet Insights",
-        value: "facebook-ad-set-insights",
-      },
-      {
-        label: "Account Level",
-        value: "facebook-account-levels",
-      },
-      {
-        label: "Creative Level",
-        value: "facebook-ad-creatives-levels",
-      },
-      {
-        label: "Ad Set Level",
-        value: "facebook-ad-set-levels",
-      },
-      {
-        label: "Campaign Fields",
-        value: "facebook-campaign-fields",
-      },
-    ],
+    fields: FIELDS,
   });
   const dispatch = useDispatch();
   const { adAccounts } =
@@ -121,9 +100,9 @@ export default function SelectAttribute(props: any) {
 
     const campaignFieldsResponse = await axios.post(
       `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "campaignFields" }
+      { insightName: "adSetFields" }
     );
-    setCampaignFields(campaignFieldsResponse?.data?.data);
+    setAdSetFields(campaignFieldsResponse?.data?.data);
 
     setSelectedKeys({
       ...selectedKeys,
@@ -133,7 +112,7 @@ export default function SelectAttribute(props: any) {
       selectedAccountLevel: accountLevelResponse?.data?.data,
       selectedCreativeLevel: creativeLevelResponse?.data?.data,
       selectedAdSetLevel: adSetLevelResponse?.data?.data,
-      selectedCampaignFields: campaignFieldsResponse?.data?.data,
+      selectedAdSetFields: campaignFieldsResponse?.data?.data,
     });
   };
 
@@ -205,15 +184,33 @@ export default function SelectAttribute(props: any) {
   };
 
   const handleChange = (keyName: any) => (selected: any) => {
-    setSelectedKeys({
-      ...selectedKeys,
-      [keyName]: selected,
-    });
+    if (keyName === "selectedDays") {
+      let newCron = "";
+      if (selected.length === 7) {
+        newCron = "0 0 * * *";
+      } else {
+        let updated: any = [];
+        selected.map((item: any) => updated.push(item?.value));
+        newCron = `0 0 * * ` + updated.toString();
+      }
+      setSelectedKeys({
+        ...selectedKeys,
+        [keyName]: selected,
+        cron: newCron,
+      });
+    } else {
+      setSelectedKeys({
+        ...selectedKeys,
+        [keyName]: selected,
+      });
+    }
   };
 
-  const handleSetDataAndMoveToNext = () => {
-    dispatch(setSelectedKeysInfo(selectedKeys));
+  console.log("selectedKeys", selectedKeys);
 
+  const handleSetDataAndMoveToNext = async () => {
+    await dispatch(setSelectedKeysInfo(selectedKeys));
+    await dispatch(facebookConfigAsync(selectedKeys));
     router.push("/schedule");
   };
 
@@ -370,7 +367,7 @@ export default function SelectAttribute(props: any) {
 
           <div className="flex flex-row gap-4">
             <div className="flex flex-col w-[200px]">
-              <label>Campaign Fields</label>
+              <label>AdSet Fields</label>
 
               <Select
                 defaultValue={options?.fields[6]}
@@ -383,29 +380,58 @@ export default function SelectAttribute(props: any) {
 
               <Select
                 isMulti
-                options={campaignFields}
-                value={selectedKeys?.selectedCampaignFields}
-                onChange={handleChange("selectedCampaignFields")}
+                options={adSetFields}
+                value={selectedKeys?.selectedAdSetFields}
+                onChange={handleChange("selectedAdSetFields")}
               />
             </div>
           </div>
+
+          <div className="flex flex-row gap-4">
+            <div className="flex flex-col w-[200px]">
+              <label>Schedule Config</label>
+
+              <Select
+                options={configCron}
+                defaultValue={configCron[1]}
+                onChange={handleChange("configDays")}
+                value={selectedKeys?.configDays}
+              />
+            </div>
+            {selectedKeys?.configDays?.label === "Days" && (
+              <div className="flex flex-col w-[800px]">
+                <label>Values</label>
+                <Select
+                  isMulti
+                  options={days}
+                  value={selectedKeys?.selectedDays}
+                  onChange={handleChange("selectedDays")}
+                />
+              </div>
+            )}
+          </div>
+          {selectedKeys?.configDays?.label === "Days" ? (
+            <span>This config will be executed on every selected day</span>
+          ) : (
+            <span>This config will be executed on last day of the month</span>
+          )}
         </>
       )}
-      
-        <div className="inline-flex justify-end">
-          <button
-            onClick={() => router.push("/authorize")}
-            className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
-          >
-            Prev
-          </button>
-          <button
-            onClick={handleSetDataAndMoveToNext}
-            className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
-          >
-            Next
-          </button>
-        </div>
+
+      <div className="inline-flex justify-end">
+        <button
+          onClick={() => router.push("/authorize")}
+          className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
+        >
+          Prev
+        </button>
+        <button
+          onClick={handleSetDataAndMoveToNext}
+          className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

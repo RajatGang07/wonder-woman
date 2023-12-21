@@ -7,6 +7,7 @@ import adCampaignReducer from './reducers/adCampaigns';
 import generateCSV from './reducers/generateCSV';
 import storeFacebookInfo from './reducers/storeFacebookInfo';
 import facebookGetUserListSlice from './reducers/facebookGetCredentials';
+import fetchfacebookConfigSlice from './reducers/fetchFacebookConfig';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   adCampaignReducer: adCampaignReducer,
   generateCSVReducer: generateCSV,
   storeFacebookInfoReducer: storeFacebookInfo,
-  facebookGetUserListReducer: facebookGetUserListSlice
+  facebookGetUserListReducer: facebookGetUserListSlice,
+  fetchfacebookConfigReducer: fetchfacebookConfigSlice
 });
 
 export const store = configureStore({

@@ -72,7 +72,6 @@ export default function DataSource() {
   };
 
   const handleRadioButton = (event: any) => {
-    console.log("event", event.target.value);
     setSelectedRadio(event.target.value);
   };
 
