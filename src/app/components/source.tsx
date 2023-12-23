@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
 import { facebookAsync } from "../redux/reducers/facebookCredentials";
@@ -17,12 +17,16 @@ export default function DataSource(props: any) {
   const dispatch = useDispatch();
   const router = useRouter();
 
+
+  const selectedDataSource = useSelector((state: any) => state?.storeFacebookInfoReducer?.selectedDataSource)
+
+  console.log(selectedDataSource, 'selectedDataSource')
   const handleSetDataAndMoveToNext = () => {
-    router.push("/authorize");
+    router.push("/data-stream/authorize");
   };
 
   return (
-    <div className="ml-[300px] pb-8 gap-12 ">
+    <div className="pb-8 gap-12 ">
       <div className="flex pb-8 gap-12 flex-row radio-container">
         <div
           className="flex gap-4"
@@ -40,7 +44,7 @@ export default function DataSource(props: any) {
         </div>
 
         <div className="flex gap-4">
-          <input type="radio" id="radio2" name="image" />
+          <input type="radio" id="radio2" name="image" disabled />
           <label>
             <Image
               src={adwords}
@@ -52,7 +56,7 @@ export default function DataSource(props: any) {
         </div>
 
         <div className="flex gap-4">
-          <input type="radio" id="radio3" name="image" />
+          <input type="radio" id="radio3" name="image" disabled />
           <label>
             {" "}
             <Image
@@ -64,7 +68,7 @@ export default function DataSource(props: any) {
           </label>
         </div>
         <div className="flex gap-4">
-          <input type="radio" id="radio3" name="image" />
+          <input type="radio" id="radio3" name="image" disabled />
           <label>
             {" "}
             <Image
@@ -76,7 +80,7 @@ export default function DataSource(props: any) {
           </label>
         </div>
         <div className="flex gap-4">
-          <input type="radio" id="radio3" name="image" />
+          <input type="radio" id="radio3" name="image" disabled />
           <label>
             {" "}
             <Image
@@ -100,12 +104,20 @@ export default function DataSource(props: any) {
         </div>
       </div>
 
-      <div className="inline-flex justify-end">
+      {/* <div className="inline-flex justify-end">
         <button
           onClick={handleSetDataAndMoveToNext}
           className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
         >
           Next
+        </button>
+      </div> */}
+      <div className="flex justify-center">
+        <button
+          onClick={selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {} }
+          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${selectedDataSource === "" ? ' opacity-50 cursor-not-allowed' : ''}`}
+        >
+          Save & Next
         </button>
       </div>
     </div>

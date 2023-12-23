@@ -21,7 +21,7 @@ export default function SelectAttribute(props: any) {
     (state: any) => state?.storeFacebookInfoReducer?.selectedKeys
   );
 
-  const [csvTable, setCSVTable] = useState([])
+  const [csvTable, setCSVTable] = useState([]);
   const [schedule, setSchedule] = useState([
     {
       label: "Daily",
@@ -55,9 +55,9 @@ export default function SelectAttribute(props: any) {
       handleGenerateCsv();
     }
   }, [selectedKeys]);
-  console.log("csvTable", selectedKeys);
+
   return (
-    <div className="flex justify-between flex-col ml-[300px] pb-8 gap-4 w-[1000px]">
+    <div className="flex justify-between flex-col pb-8 gap-4">
       <label>Accounts</label>
       <Select
         defaultValue={schedule[0]}

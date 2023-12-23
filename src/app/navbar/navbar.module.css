@@ -1,0 +1,50 @@
+.hamburgerwrapper {
+  align-items: center;
+  display: flex;
+}
+.hamburger {
+  background-color: #fff;
+  cursor: pointer;
+  height: 18px;
+  margin: 0 25px;
+  padding: 0px;
+  position: relative;
+  width: 22px;
+}
+.line {
+  background-color: #0a0836;
+  border-radius: 2px;
+  display: block;
+  height: 2px;
+  left: 0;
+  opacity: 1;
+  position: absolute;
+  transition: 0.25s ease-in-out;
+  width: 100%;
+}
+
+.hamburger .line:first-child {
+  top: 0;
+}
+.hamburger .line:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hamburger .line:nth-child(3) {
+  bottom: 0;
+}
+
+.hamburger.open .line:first-child {
+  transform: translateY(8px) translateX(0) rotate(45deg);
+}
+
+.hamburger.open .line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .line:nth-child(3) {
+  transform: translateY(-8px) translateX(0) rotate(-45deg);
+}
+.hamburger.open .line {
+  background-color: #84829a;
+}

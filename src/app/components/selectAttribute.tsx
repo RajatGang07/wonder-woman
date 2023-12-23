@@ -47,6 +47,8 @@ export default function SelectAttribute(props: any) {
     campaigns: [],
     fields: FIELDS,
   });
+
+  const state = useSelector(state => state)
   const dispatch = useDispatch();
   const { adAccounts } =
     useSelector((state: any) => state.adAccountReducer) || [];
@@ -116,6 +118,7 @@ export default function SelectAttribute(props: any) {
     });
   };
 
+  console.log('state', state)
   useEffect(() => {
     if (adAccounts?.length > 0) {
       const data: any = [];
@@ -215,7 +218,7 @@ export default function SelectAttribute(props: any) {
   };
 
   return (
-    <div className="flex justify-between flex-col ml-[300px] pb-8 gap-4 w-[1000px]">
+    <div className="flex justify-between flex-col pb-8 gap-4">
       <label>Accounts</label>
       <Select
         defaultValue={selectedOption}
@@ -234,7 +237,7 @@ export default function SelectAttribute(props: any) {
           />
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Ad Insights</label>
 
               <Select
@@ -243,7 +246,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -255,7 +258,7 @@ export default function SelectAttribute(props: any) {
             </div>
           </div>
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Campaign Insights</label>
 
               <Select
@@ -265,7 +268,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -278,7 +281,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Ad Set Insights</label>
 
               <Select
@@ -287,7 +290,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -300,7 +303,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Account Level</label>
 
               <Select
@@ -309,7 +312,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -322,7 +325,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Creative Level</label>
 
               <Select
@@ -331,7 +334,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -344,7 +347,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Ad Set Level</label>
 
               <Select
@@ -353,7 +356,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -366,7 +369,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>AdSet Fields</label>
 
               <Select
@@ -375,7 +378,7 @@ export default function SelectAttribute(props: any) {
                 isDisabled
               />
             </div>
-            <div className="flex flex-col w-[800px]">
+            <div className="flex flex-col">
               <label>Values</label>
 
               <Select
@@ -388,7 +391,7 @@ export default function SelectAttribute(props: any) {
           </div>
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col w-[200px]">
+            <div className="flex flex-col">
               <label>Schedule Config</label>
 
               <Select
@@ -399,7 +402,7 @@ export default function SelectAttribute(props: any) {
               />
             </div>
             {selectedKeys?.configDays?.label === "Days" && (
-              <div className="flex flex-col w-[800px]">
+              <div className="flex flex-col">
                 <label>Values</label>
                 <Select
                   isMulti

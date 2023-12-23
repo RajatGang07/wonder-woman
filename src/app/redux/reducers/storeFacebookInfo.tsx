@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const selectedKeyInitialState = {
-    selectedKeys: {},
-    selectedDataSource: "Facebook",
+    selectedKeys: "",
+    selectedDataSource: "",
     selectedFacebookUser: {}
 };
 
@@ -14,7 +14,7 @@ const selectedKeySlice = createSlice({
       state.selectedKeys = action.payload;
     },
     setSelectedDataSource: (state, action) => {
-      state.selectedKeys = action.payload;
+      state.selectedDataSource = action.payload;
     },
     setSelectedFacebookUser: (state, action) => {
       state.selectedFacebookUser = action.payload;

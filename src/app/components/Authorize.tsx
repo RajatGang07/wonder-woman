@@ -15,7 +15,7 @@ import { setSelectedFacebookUser } from "../redux/reducers/storeFacebookInfo";
 export default function DataSource() {
   const [selectedOption, setSelectedOption] = useState<any>(null);
   const [optionList, setOptionList] = useState<any>([]);
-  const [selectedRadio, setSelectedRadio] = useState<any>("existing");
+  const [selectedRadio, setSelectedRadio] = useState<any>("");
   const { data: session, update } = useSession();
 
   const dispatch = useDispatch();
@@ -75,12 +75,16 @@ export default function DataSource() {
     setSelectedRadio(event.target.value);
   };
 
+  const handleSetDataAndMoveToNext = () => {
+    router.push("/data-stream/attributes");
+  };
+
   console.log('session', session)
   useEffect(() => {
     if (session?.accessToken) {
       sendFacebookCred();
     }
-  }, [session?.accessToken]);
+  }, [JSON.stringify(session?.accessToken)]);
 
   const sendFacebookCred = async () => {
     const userData: any = localStorage.getItem("auth");
@@ -103,9 +107,10 @@ export default function DataSource() {
     dispatch(setSelectedFacebookUser(selected));
   };
 
+  console.log('selected', selectedRadio)
   return (
     <div
-      className="flex  ml-[300px] pb-8 gap-8 flex-col w-[1000px]"
+      className="flex pb-8 gap-8 flex-col"
       onChange={handleRadioButton}
     >
       <div className="flex gap-4 items-center w-[700px]">
@@ -114,6 +119,7 @@ export default function DataSource() {
           id={selectedRadio}
           name={selectedRadio}
           value={"existing"}
+          disabled={optionList.length === 0}
         />
         <label>Use Existing Auth</label>
 
@@ -122,6 +128,7 @@ export default function DataSource() {
             defaultValue={selectedOption}
             onChange={handleUseExistingAuth}
             options={optionList}
+            isDisabled={selectedRadio !== "existing"}
           />
         </div>
       </div>
@@ -147,7 +154,7 @@ export default function DataSource() {
           ""
         )}
       </div>
-      <div className="inline-flex justify-end">
+      {/* <div className="inline-flex justify-end">
         <button
           onClick={() => router.push("/dataSource")}
           className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
@@ -160,6 +167,14 @@ export default function DataSource() {
         >
           Next
         </button>
+      </div> */}
+       <div className="flex justify-center">
+      <button
+        onClick={selectedRadio === "" ? () => {} :handleSetDataAndMoveToNext}
+        className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${selectedRadio === "" ? ' opacity-50 cursor-not-allowed' : ''}`}
+      >
+        Save & Next
+      </button>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ const ConfigListing = () => {
     );
   };
   return (
-    <section className="ml-[300px] pb-8 gap-12  ">
+    <section className="pb-8 gap-12  ">
       {configData &&
         configData.length > 0 &&
         configData.map((item: any, index: any) => {
