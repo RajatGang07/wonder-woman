@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import NavBar from "./navbar/navbar";
+import NavBar from "./components/navbar/navbar";
 import Sidebar from "./components/Sidebar";
 import { redirect } from "next/navigation";
 import TabsComponent from "./components/Tabs";
@@ -18,8 +18,8 @@ const Dashboard = (props: any) => {
       {typeof window !== "undefined" && JSON?.parse(authData)?.token ? (
         <>
           {/* <NavBar /> */}
-          <Sidebar />
-          <TabsComponent />
+          {/* <Sidebar /> */}
+          {/* <TabsComponent /> */}
         </>
       ) : (
         redirect("/login")

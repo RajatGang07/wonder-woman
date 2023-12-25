@@ -25,6 +25,7 @@ export default function SelectAttribute(props: any) {
   const [adSetFields, setAdSetFields] = useState([]);
 
   const [selectedKeys, setSelectedKeys] = useState<any>({
+    configName: "",
     account: "",
     campaign: [],
     userId: "",
@@ -48,7 +49,7 @@ export default function SelectAttribute(props: any) {
     fields: FIELDS,
   });
 
-  const state = useSelector(state => state)
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { adAccounts } =
     useSelector((state: any) => state.adAccountReducer) || [];
@@ -118,7 +119,6 @@ export default function SelectAttribute(props: any) {
     });
   };
 
-  console.log('state', state)
   useEffect(() => {
     if (adAccounts?.length > 0) {
       const data: any = [];
@@ -187,7 +187,12 @@ export default function SelectAttribute(props: any) {
   };
 
   const handleChange = (keyName: any) => (selected: any) => {
-    if (keyName === "selectedDays") {
+    if (keyName === "configName") {
+      setSelectedKeys({
+        ...selectedKeys,
+        [keyName]: selected?.target?.value,
+      });
+    } else if (keyName === "selectedDays") {
       let newCron = "";
       if (selected.length === 7) {
         newCron = "0 0 * * *";
@@ -209,21 +214,28 @@ export default function SelectAttribute(props: any) {
     }
   };
 
-  console.log("selectedKeys", selectedKeys);
 
   const handleSetDataAndMoveToNext = async () => {
     await dispatch(setSelectedKeysInfo(selectedKeys));
     await dispatch(facebookConfigAsync(selectedKeys));
-    router.push("/schedule");
+    router.push("/data-stream/schedule");
   };
 
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
+      <label>Date Stream Name</label>
+      <input
+        type="text"
+        className="border-2"
+        onChange={handleChange("configName")}
+        value={selectedKeys?.configName}
+      />
       <label>Accounts</label>
       <Select
         defaultValue={selectedOption}
         onChange={onHandleAccountsChange}
         options={options?.accounts}
+        value={selectedKeys?.account}
       />
       {selectedKeys.account && (
         <>
@@ -237,7 +249,7 @@ export default function SelectAttribute(props: any) {
           />
 
           <div className="flex flex-row gap-4">
-            <div className="flex flex-col">
+            <div className="flex flex-col w-[400px]">
               <label>Ad Insights</label>
 
               <Select
@@ -421,7 +433,7 @@ export default function SelectAttribute(props: any) {
         </>
       )}
 
-      <div className="inline-flex justify-end">
+      {/* <div className="inline-flex justify-end">
         <button
           onClick={() => router.push("/authorize")}
           className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
@@ -433,6 +445,18 @@ export default function SelectAttribute(props: any) {
           className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
         >
           Next
+        </button>
+      </div> */}
+      <div className="flex justify-end">
+        <button
+          onClick={
+            selectedKeys?.account === "" ? () => {} : handleSetDataAndMoveToNext
+          }
+          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
+            selectedKeys?.account === "" ? " opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Save & Next
         </button>
       </div>
     </div>

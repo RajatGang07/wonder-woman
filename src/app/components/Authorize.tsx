@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
-import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -60,12 +59,17 @@ export default function DataSource() {
   }, [facebookUserList]);
 
   const handleSelectedOption = async () => {
-    // setSelectedOption(selected);
-
+    debugger
     try {
       const response = await fetch("http://localhost:3000/api/auth/signin");
-      window.open("http://localhost:3000/api/auth/signin");
-      const jsonData = (await response.json()).data;
+      // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
+      window.open(
+        'http://localhost:3000/api/auth/signin',
+        'facebook-window',
+        'width=600,height=400,scrollbar=yes,noopener'
+      );
+
+      // const jsonData = (await response.json()).data;
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -79,7 +83,7 @@ export default function DataSource() {
     router.push("/data-stream/attributes");
   };
 
-  console.log('session', session)
+  console.log("session", session);
   useEffect(() => {
     if (session?.accessToken) {
       sendFacebookCred();
@@ -107,12 +111,8 @@ export default function DataSource() {
     dispatch(setSelectedFacebookUser(selected));
   };
 
-  console.log('selected', selectedRadio)
   return (
-    <div
-      className="flex pb-8 gap-8 flex-col"
-      onChange={handleRadioButton}
-    >
+    <div className="flex pb-8 gap-8 flex-col" onChange={handleRadioButton}>
       <div className="flex gap-4 items-center w-[700px]">
         <input
           type="radio"
@@ -168,13 +168,15 @@ export default function DataSource() {
           Next
         </button>
       </div> */}
-       <div className="flex justify-center">
-      <button
-        onClick={selectedRadio === "" ? () => {} :handleSetDataAndMoveToNext}
-        className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${selectedRadio === "" ? ' opacity-50 cursor-not-allowed' : ''}`}
-      >
-        Save & Next
-      </button>
+      <div className="flex justify-center">
+        <button
+          onClick={selectedRadio === "" ? () => {} : handleSetDataAndMoveToNext}
+          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
+            selectedRadio === "" ? " opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Save & Next
+        </button>
       </div>
     </div>
   );

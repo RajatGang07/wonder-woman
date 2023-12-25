@@ -3,19 +3,13 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useRouter } from "next/navigation";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
-import { useSession } from "next-auth/react";
 import Table from "./Table";
 
 export default function SelectAttribute(props: any) {
-  const dispatch = useDispatch();
   const router = useRouter();
-  const { adAccounts } =
-    useSelector((state: any) => state.adAccountReducer) || [];
-  const { adCampaignAccounts } =
-    useSelector((state: any) => state.adCampaignReducer) || [];
 
   const selectedKeys = useSelector(
     (state: any) => state?.storeFacebookInfoReducer?.selectedKeys

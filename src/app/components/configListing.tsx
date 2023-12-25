@@ -14,14 +14,12 @@ interface FormData {
 
 const ConfigListing = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const userData: any = localStorage.getItem("auth");
 
   const configData =
     useSelector((state: any) => state.fetchfacebookConfigReducer.configData) ||
     "";
 
-  console.log("configData", configData);
   useEffect(() => {
     fetchAllConfigs();
   }, []);
@@ -37,7 +35,7 @@ const ConfigListing = () => {
         configData.length > 0 &&
         configData.map((item: any, index: any) => {
           return (
-            <div className="max-w-sm rounded overflow-hidden shadow-lg">
+            <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
               <div className="flex justify-end gap-4 m-4">
                 <div>
                   <FaTrash color="red" />
@@ -54,7 +52,7 @@ const ConfigListing = () => {
               </div>
 
               <div className="px-6 pt-4 pb-2">
-                {Object.keys(item).map((configKeys: any) => {
+                {Object.keys(item).map((configKeys: any, indexNum: any) => {
                   if (
                     configKeys === "account" ||
                     configKeys === "userId" ||
@@ -65,7 +63,7 @@ const ConfigListing = () => {
                     return;
                   if (item[configKeys].length > 0) {
                     return (
-                      <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                      <span key={indexNum} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                         #{configKeys}
                       </span>
                     );

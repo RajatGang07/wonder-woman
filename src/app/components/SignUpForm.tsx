@@ -17,7 +17,6 @@ const SignUpForm = () => {
       password: values.password,
       confirmPassword: values.confirmPassword,
     };
-    console.log(data);
   };
   return (
     <section className=" ">

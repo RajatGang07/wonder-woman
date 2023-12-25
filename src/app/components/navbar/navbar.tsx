@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 
-import { logout } from "../redux/reducers/authSlice";
+import { logout } from "../../redux/reducers/authSlice";
 import styles from "./navbar.module.css";
 
 const NavBar = () => {

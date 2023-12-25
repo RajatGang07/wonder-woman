@@ -1,13 +1,9 @@
-import TabsComponent from "../components/Tabs";
+import MonitorPipeline from "../components/monitoPipeline";
 
-
-const Dashboard = () => {
+const MonitorPipelinePage = () => {
   return (
-    <div>
-                  {/* <TabsComponent /> */}
-
-    </div>
+    <MonitorPipeline />
   );
 };
 
-export default Dashboard;
+export default MonitorPipelinePage;

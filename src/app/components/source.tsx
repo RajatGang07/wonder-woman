@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 
-import { facebookAsync } from "../redux/reducers/facebookCredentials";
 import FacebookIcon from "../assets/Facebook.jpg";
 import DriveIcon from "../assets/Harddisk.jpg";
 import InstagramIcon from "../assets/Instagram.jpg";
@@ -20,7 +19,6 @@ export default function DataSource(props: any) {
 
   const selectedDataSource = useSelector((state: any) => state?.storeFacebookInfoReducer?.selectedDataSource)
 
-  console.log(selectedDataSource, 'selectedDataSource')
   const handleSetDataAndMoveToNext = () => {
     router.push("/data-stream/authorize");
   };
