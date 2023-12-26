@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 
+import Logo from "../../assets/foresee_logo.png";
 import { logout } from "../../redux/reducers/authSlice";
 import styles from "./navbar.module.css";
 
@@ -36,14 +37,19 @@ const NavBar = () => {
             <span className={styles.line}></span>
             <span className={styles.line}></span>
           </button>
-
-          <a href="#" className="-m-1.5 p-1.5">
+          <Image
+              src={Logo}
+              alt="Picture of the author"
+              width={150}
+              height={150}
+            />
+          {/* <a href="#" className="-m-1.5 p-1.5">
             <img
               className="h-8 w-auto"
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt=""
             />
-          </a>
+          </a> */}
         </div>
 
         <div

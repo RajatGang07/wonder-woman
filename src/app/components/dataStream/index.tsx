@@ -5,7 +5,7 @@ import axios from "axios";
 
 import Table from "./Listing";
 
-export default function MonitorPipeline(props: any) {
+export default function DataStreamPage(props: any) {
   const [csvTable, setCSVTable] = useState([]);
 
   const backendURL = "http://localhost:8080";

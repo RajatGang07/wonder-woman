@@ -218,19 +218,19 @@ export default function SelectAttribute(props: any) {
   const handleSetDataAndMoveToNext = async () => {
     await dispatch(setSelectedKeysInfo(selectedKeys));
     await dispatch(facebookConfigAsync(selectedKeys));
-    router.push("/data-stream/schedule");
+    router.push("/create-data-stream/schedule");
   };
 
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
-      <label>Date Stream Name</label>
+      <label>Data Stream Name*</label>
       <input
         type="text"
         className="border-2"
         onChange={handleChange("configName")}
         value={selectedKeys?.configName}
       />
-      <label>Accounts</label>
+      <label>Accounts*</label>
       <Select
         defaultValue={selectedOption}
         onChange={onHandleAccountsChange}
@@ -239,7 +239,7 @@ export default function SelectAttribute(props: any) {
       />
       {selectedKeys.account && (
         <>
-          <label>Campaigns</label>
+          <label>Campaigns*</label>
           <Select
             defaultValue={selectedOption}
             options={options?.campaigns}
@@ -402,9 +402,9 @@ export default function SelectAttribute(props: any) {
             </div>
           </div>
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 mt-10">
             <div className="flex flex-col">
-              <label>Schedule Config</label>
+              <label>Schedule Data Stream</label>
 
               <Select
                 options={configCron}

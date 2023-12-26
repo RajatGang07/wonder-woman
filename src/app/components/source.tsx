@@ -20,7 +20,7 @@ export default function DataSource(props: any) {
   const selectedDataSource = useSelector((state: any) => state?.storeFacebookInfoReducer?.selectedDataSource)
 
   const handleSetDataAndMoveToNext = () => {
-    router.push("/data-stream/authorize");
+    router.push("/create-data-stream/authorize");
   };
 
   return (
@@ -115,7 +115,7 @@ export default function DataSource(props: any) {
           onClick={selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {} }
           className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${selectedDataSource === "" ? ' opacity-50 cursor-not-allowed' : ''}`}
         >
-          Save & Next
+           Next
         </button>
       </div>
     </div>

@@ -53,12 +53,11 @@ export default function Sidebar({ show, setter }: any) {
       </div>
       <div className="flex flex-col">
       <MenuItem
-          name="Monitor Pipeline"
-          route="/monitorPipeline"
+          name="Monitor Data Stream"
+          route="/dataStream"
           icon={<MdDashboard />}
         />
-        <MenuItem name="Connect Data Source" route="/data-stream/source" icon={<MdAnalytics />} />
-        <MenuItem name="Authorize" route="/data-stream/authorize" icon={<MdSupervisedUserCircle />} />
+        <MenuItem name="Connections" route="/connections" icon={<MdSupervisedUserCircle />} />
       
       </div>
     </aside>

@@ -59,7 +59,6 @@ export default function DataSource() {
   }, [facebookUserList]);
 
   const handleSelectedOption = async () => {
-    debugger
     try {
       const response = await fetch("http://localhost:3000/api/auth/signin");
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
@@ -80,7 +79,7 @@ export default function DataSource() {
   };
 
   const handleSetDataAndMoveToNext = () => {
-    router.push("/data-stream/attributes");
+    router.push("/create-data-stream/attributes");
   };
 
   console.log("session", session);

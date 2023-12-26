@@ -1,18 +1,17 @@
 "use client";
-import Link from "next/link";
 import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFacebookConfigAsync } from "../redux/reducers/fetchFacebookConfig";
+import { fetchFacebookConfigAsync } from "../../redux/reducers/fetchFacebookConfig";
 
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Lisitng from "./Listing";
 
 interface FormData {
   email: string;
   password: string;
 }
 
-const ConfigListing = () => {
+const ConnectionListing = () => {
   const dispatch = useDispatch();
   const userData: any = localStorage.getItem("auth");
 
@@ -31,7 +30,8 @@ const ConfigListing = () => {
   };
   return (
     <section className="pb-8 gap-12  ">
-      {configData &&
+      <Lisitng data={configData} />
+      {/* {configData &&
         configData.length > 0 &&
         configData.map((item: any, index: any) => {
           return (
@@ -72,9 +72,9 @@ const ConfigListing = () => {
               </div>
             </div>
           );
-        })}
+        })} */}
     </section>
   );
 };
 
-export default ConfigListing;
+export default ConnectionListing;
