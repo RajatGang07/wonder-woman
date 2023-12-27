@@ -18,7 +18,6 @@ export default function DataStreamPage(props: any) {
     );
 
     setCSVTable(creativeLevelResponse?.data?.data);
-    console.log("creativeLevelResponse", creativeLevelResponse);
   };
 
   useEffect(() => {

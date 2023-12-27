@@ -16,15 +16,16 @@ export default function DataSource(props: any) {
   const dispatch = useDispatch();
   const router = useRouter();
 
-
-  const selectedDataSource = useSelector((state: any) => state?.storeFacebookInfoReducer?.selectedDataSource)
+  const selectedDataSource = useSelector(
+    (state: any) => state?.storeFacebookInfoReducer?.selectedDataSource
+  );
 
   const handleSetDataAndMoveToNext = () => {
     router.push("/create-data-stream/authorize");
   };
 
   return (
-    <div className="pb-8 gap-12 ">
+    <div className="pb-8 h-[78%] position: relative">
       <div className="flex pb-8 gap-12 flex-row radio-container">
         <div
           className="flex gap-4"
@@ -110,14 +111,19 @@ export default function DataSource(props: any) {
           Next
         </button>
       </div> */}
-      <div className="flex justify-center">
+
+      <footer className=" flex justify-end items-center bg-white shadow-3xl position: absolute bottom-0 w-[106%] h-[100px] ml-[-48px]">
         <button
-          onClick={selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {} }
-          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${selectedDataSource === "" ? ' opacity-50 cursor-not-allowed' : ''}`}
+          onClick={
+            selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {}
+          }
+          className={`bg-transparent mr-10  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
+            selectedDataSource === "" ? " opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-           Next
+          Next
         </button>
-      </div>
+      </footer>
     </div>
   );
 }

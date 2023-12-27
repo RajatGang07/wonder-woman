@@ -24,7 +24,14 @@ const config: Config = {
       },
       colors: {
         primary: "#ff5325",
-        secondary: "#173969"
+        secondary: "#173969",
+        gray: "#C3CDD2",
+        lightGray: "#DDE2EB",
+        shinyGray:"#CCCDCD",
+        shinyBlack: "#181D1E",
+        lightBlack: "#797B7C",
+        successGreen: "#4BB543",
+        errorRed: "#ff0000"
       },
     },
     fontFamily: {

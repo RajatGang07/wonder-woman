@@ -4,15 +4,15 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  configData: null,
+  // user: null,
   // isAuthenticated: false,
   status: "idle",
   error: null,
 };
 const backendURL = "http://localhost:8080";
 
-export const fetchFacebookConfigAsync: any = createAsyncThunk(
-  "facebook/config",
+export const deleteFacebookConfigAsync: any = createAsyncThunk(
+  "faebook/config",
   async (credentials, { rejectWithValue }) => {
     try {
       const config = {
@@ -21,7 +21,7 @@ export const fetchFacebookConfigAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/get/facebook/config`,
+        `${backendURL}/api/v1/facebook/config/delete`,
         credentials,
         config
       );
@@ -36,27 +36,32 @@ export const fetchFacebookConfigAsync: any = createAsyncThunk(
   }
 );
 
-const fetchfacebookConfigSlice = createSlice({
-  name: "FetchfaebookConfig",
+const deletefaebookConfigSlice = createSlice({
+  name: "deleteFacebookConfig",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state: any) => {
+      state.user = null;
+      state.isAuthenticated = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFacebookConfigAsync.pending, (state: any) => {
+      .addCase(deleteFacebookConfigAsync.pending, (state: any) => {
         state.status = "loading";
-        state.configData = [];
       })
-      .addCase(fetchFacebookConfigAsync.fulfilled, (state: any, action: any) => {
+      .addCase(deleteFacebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         // state.isAuthenticated = true;
-        state.configData = action.payload.data.facebookConfig;
+        // state.user = action.payload.data;
       })
-      .addCase(fetchFacebookConfigAsync.rejected, (state: any, action: any) => {
+      .addCase(deleteFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         // state.error = action.payload;
-        state.configData = [];
       });
   },
 });
 
-export default fetchfacebookConfigSlice.reducer;
+export const { logout } = deletefaebookConfigSlice.actions;
+
+export default deletefaebookConfigSlice.reducer;

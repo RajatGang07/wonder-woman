@@ -1,7 +1,7 @@
-import ConnectionListing from '../components/connections';
+import ConenctionListing from '../components/connections';
 
 export default function ConnectionsPage() {
   return (
-      <ConnectionListing />
+      <ConenctionListing />
   );
 }

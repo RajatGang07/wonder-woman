@@ -44,10 +44,9 @@ export const options: NextAuthOptions = {
       session.accessToken = token.accessToken;
       return session;
     },
-    async redirect({ url, baseUrl }: any) {
-      console.log('I am here', url, baseUrl)
-      // Handle the redirect callback
-      return url.startsWith(baseUrl) ? url : baseUrl;
-    },
+    // async redirect({ url, baseUrl }: any) {
+    //   // Handle the redirect callback
+    //   return url.startsWith(baseUrl) ? url : baseUrl;
+    // },
   },
 };

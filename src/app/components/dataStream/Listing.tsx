@@ -1,18 +1,17 @@
 "use client";
 import React from "react";
 import moment from "moment";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+
+import { MdDownload } from "react-icons/md";
 
 const Lisitng = ({ data }: any) => {
   const router = useRouter();
 
-  if (!data || data.length === 0) {
-    return <p>No data available</p>;
-  }
-
   const columns = [
     "Config Name",
     "Account Name",
+    "Source",
     "Status",
     "Message",
     "Duration",
@@ -31,9 +30,7 @@ const Lisitng = ({ data }: any) => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h1 className="font-bold text-2xl">
-          Data Stream Listing
-        </h1>
+        <h1 className="font-bold text-2xl">Data Stream Listing</h1>
         <button
           onClick={handleNavigate("/create-data-stream/source")}
           className={`bg-secondary  text-white font-semibold  py-2 px-4 border border-secondary hover:border-secondary hover:bg-white rounded hover:text-secondary`}
@@ -42,80 +39,114 @@ const Lisitng = ({ data }: any) => {
         </button>
       </div>
 
-      <div className="overflow-x-auto w-[100%] border-solid border-2 border-secondary mt-12">
+      <div className="overflow-x-auto w-[100%] border-solid mt-4">
         <table className=" border-collapse  mt-8">
           <thead>
             <tr>
               {columns.map((column: any, index: any) => (
-                <th className="min-w-[300px] text-start pl-8" key={index}>
+                <th
+                  className={`${
+                    column === "Config Name" ||
+                    column === "Source" ||
+                    column === "Status" ||
+                    column === "Selected Days" ||
+                    column === "Duration" ||
+                    column === "Created On" ||
+                    column === "Actions"
+                      ? "min-w-[200px]"
+                      : "min-w-[500px]"
+                  } text-shinyBlack text-start p-[12px] border-2  border-shinyGray h-[100%] w-max`}
+                  key={index}
+                >
                   {column}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {data.map((row: any, rowIndex: any) => {
-              const selectedDay: any = [];
-              row?.selectedDays.map((item: any) =>
-                selectedDay.push(item.label)
-              );
-              console.log("selectedDay", selectedDay);
-              return (
-                <tr className="border-b-2  border-b-[#173969]" key={rowIndex}>
-                  <td className="min-w-[300px] pl-8">{row?.name}</td>
-                  <td className="min-w-[300px] pl-8">{row?.account?.label}</td>
-                  <td className="min-w-[300px] pl-8">
-                    {row?.status === "Successful" ? (
-                      <div
-                        style={{
-                          padding: "8px",
-                          backgroundColor: "#ABE098",
-                          width: "100px",
-                          borderRadius: "4px",
-                        }}
+            {data.length > 0 ? (
+              data.map((row: any, rowIndex: any) => {
+                const selectedDay: any = [];
+                row?.selectedDays.map((item: any) =>
+                  selectedDay.push(item.label)
+                );
+                return (
+                  <tr
+                    className="border-b-[1px] text-lightBlack border-b-lightGray"
+                    key={rowIndex}
+                  >
+                    <td className="min-w-[200px] pl-8 border-l-[1px] border-l-shinyGray">
+                      {row?.name}
+                    </td>
+                    <td className="min-w-[300px] pl-8">
+                      {row?.account?.label}
+                    </td>
+                    <td className="min-w-[200px] pl-8">
+                      {row?.source ? row?.source : "-"}
+                    </td>
+                    <td className="min-w-[200px] pl-8">
+                      {row?.status === "Successful" ? (
+                        <div
+                          className="border-[1px] border-successGreen text-successGreen p-1 rounded"
+                          style={{
+                            padding: "6px",
+                            // backgroundColor: "#ABE098",
+                            width: "100px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {row?.status}
+                        </div>
+                      ) : (
+                        <div
+                          style={{
+                            padding: "8px",
+                            backgroundColor: "#ff0000",
+                            width: "100px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {row?.status}
+                        </div>
+                      )}
+                    </td>
+                    <td className="min-w-[300px] pl-8">{row?.message}</td>
+                    <td className="min-w-[200px] pl-8">
+                      {row?.configDays?.label}
+                    </td>
+                    <td className="min-w-[200px] pl-8">
+                      {row?.selectedDays.length > 0
+                        ? selectedDay.toString()
+                        : "-"}
+                    </td>
+                    <td className="min-w-[200px] pl-8">
+                      {moment(row?.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+                    </td>
+                    <td className="min-w-[200px] pl-8 border-r-2 border-r-shinyGray">
+                      <button
+                        onClick={handleDownload(row?.filePath)}
+                        className={`bg-secondary text-white font-semibold hover:text-secondary hover:bg-white border hover:border-secondary rounded py-2 px-4  ${
+                          row?.filePath === "NA"
+                            ? " opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
                       >
-                        {row?.status}
-                      </div>
-                    ) : (
-                      <div
-                        style={{
-                          padding: "8px",
-                          backgroundColor: "#ff0000",
-                          width: "100px",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        {row?.status}
-                      </div>
-                    )}
-                  </td>
-                  <td className="min-w-[300px] pl-8">{row?.message}</td>
-                  <td className="min-w-[300px] pl-8">
-                    {row?.configDays?.label}
-                  </td>
-                  <td className="min-w-[300px] pl-8">
-                    {row?.selectedDays.length > 0
-                      ? selectedDay.toString()
-                      : "-"}
-                  </td>
-                  <td className="min-w-[300px] pl-8">
-                    {moment(row?.createdAt).format("YYYY-MM-DD HH:mm:ss")}
-                  </td>
-                  <td className="min-w-[300px] pl-8">
-                    <button
-                      onClick={handleDownload(row?.filePath)}
-                      className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
-                        row?.filePath === "NA"
-                          ? " opacity-50 cursor-not-allowed"
-                          : ""
-                      }`}
-                    >
-                      Download CSV
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+                        <MdDownload />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td
+                  className="p-8 text-center border-b-[1px] border-b-lightGray border-l-[1px] border-l-lightGray border-r-[1px] border-r-lightGray"
+                  colSpan={5}
+                >
+                  No Data found
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

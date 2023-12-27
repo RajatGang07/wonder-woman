@@ -8,7 +8,7 @@ import axios from "axios";
 
 import Table from "./Table";
 
-export default function SelectAttribute(props: any) {
+export default function ShowPreview(props: any) {
   const router = useRouter();
 
   const selectedKeys = useSelector(
@@ -16,20 +16,6 @@ export default function SelectAttribute(props: any) {
   );
 
   const [csvTable, setCSVTable] = useState([]);
-  const [schedule, setSchedule] = useState([
-    {
-      label: "Daily",
-      value: "Daily",
-    },
-    {
-      label: "Weekly",
-      value: "Weekly",
-    },
-    {
-      label: "Manual",
-      value: "Manual",
-    },
-  ]);
 
   const backendURL = "http://localhost:8080";
 
@@ -52,30 +38,6 @@ export default function SelectAttribute(props: any) {
 
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
-      <label>Accounts</label>
-      <Select
-        defaultValue={schedule[0]}
-        // onChange={onHandleAccountsChange}
-        options={schedule}
-      />
-
-      <div className="flex justify-end gap-8">
-        <button
-          onClick={handleGenerateCsv}
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-        >
-          Preview CSV
-        </button>
-        <div className="inline-flex">
-          <button
-            onClick={() => router.push("/selectAttributes")}
-            className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
-          >
-            Prev
-          </button>
-        </div>
-      </div>
-
       <Table data={csvTable} />
     </div>
   );
