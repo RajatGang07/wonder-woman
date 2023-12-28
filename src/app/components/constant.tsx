@@ -42,6 +42,14 @@ export const configCron: any = [
 
   export const FIELDS = [
     {
+      label: "Accounts",
+      value: "account",
+    },
+    {
+      label: "Campaigns",
+      value: "campaigns",
+    },
+    {
       label: "Ad Insights",
       value: "facebook-ad-insights",
     },
@@ -68,5 +76,9 @@ export const configCron: any = [
     {
       label: "AdSet Fields",
       value: "facebook-adset-fields",
+    },
+    {
+      label: "Date Preset",
+      value: "datePreset",
     },
   ]

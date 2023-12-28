@@ -9,7 +9,7 @@ const Lisitng = ({ data, handleDisconnect }: any) => {
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-2xl">Connections</h1>
       </div>
-      <table className=" border-collapse  mt-8">
+      <table className=" border-collapse  mt-8 w-[100%]">
         <thead>
           <tr>
             {columns.map((column: any, index: any) => (
@@ -18,8 +18,8 @@ const Lisitng = ({ data, handleDisconnect }: any) => {
                   column === "Name" ||
                   column === "Email" ||
                   column === "Actions"
-                    ? "min-w-[200px]"
-                    : "min-w-[500px]"
+                    ? "w-[200px]"
+                    : "w-[500px]"
                 } text-shinyBlack text-start p-[12px] border-2  border-shinyGray h-[100%] w-max`}
                 key={index}
               >
@@ -41,15 +41,15 @@ const Lisitng = ({ data, handleDisconnect }: any) => {
                   className="border-b-[1px] text-lightBlack border-b-lightGray"
                   key={rowIndex}
                 >
-                  <td className="min-w-[200px] p-[12px] border-l-[1px] border-l-shinyGray">
+                  <td className="w-[200px] p-[12px] border-l-[1px] border-l-shinyGray">
                     {row?.name}
                   </td>
-                  <td className="min-w-[200px] p-[12px]">{row?.email}</td>
-                  <td className="min-w-[500px] p-[12px]">
+                  <td className="w-[200px] p-[12px]">{row?.email}</td>
+                  <td className="w-[500px] p-[12px]">
                     {selectedDay?.length > 0 ? selectedDay.toString() : "-"}
                   </td>
 
-                  <td className="min-w-[200px] p-[12px] border-r-[1px] border-r-shinyGray">
+                  <td className="w-[200px] p-[12px] border-r-[1px] border-r-shinyGray">
                     <div className="flex gap-4">
                       <button
                         onClick={handleDisconnect(row?.id)}

@@ -31,7 +31,8 @@ const config: Config = {
         shinyBlack: "#181D1E",
         lightBlack: "#797B7C",
         successGreen: "#4BB543",
-        errorRed: "#ff0000"
+        errorRed: "#ff0000",
+        grey: '#CCCCCC'
       },
     },
     fontFamily: {

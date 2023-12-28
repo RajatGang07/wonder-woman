@@ -12,10 +12,10 @@ import { facebookAsync } from "../redux/reducers/facebookCredentials";
 import { setSelectedFacebookUser } from "../redux/reducers/storeFacebookInfo";
 
 export default function DataSource() {
-  const [selectedOption, setSelectedOption] = useState<any>(null);
   const [optionList, setOptionList] = useState<any>([]);
+  const [selectedRadioChecked, setSelectedRadioChecked] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState<any>("");
-  const { data: session, update } = useSession();
+  const { data: session } = useSession();
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -24,7 +24,8 @@ export default function DataSource() {
 
   const selectedDataSource =
     useSelector(
-      (state: any) => state.storeFacebookInfoReducer.selectedDataSource
+      (state: any) =>
+        state.storeFacebookInfoReducer.selectedKeys.selectedDataSource
     ) || "";
   const facebookUserList =
     useSelector(
@@ -36,6 +37,11 @@ export default function DataSource() {
       fetchFacebookList();
     }
   }, []);
+
+  const selectedFacebookUser = useSelector(
+    (state: any) =>
+      state?.storeFacebookInfoReducer?.selectedKeys?.selectedFacebookUser
+  );
 
   const fetchFacebookList = async () => {
     dispatch(
@@ -55,6 +61,11 @@ export default function DataSource() {
         };
       });
       setOptionList(data);
+      setSelectedRadioChecked(true);
+      setSelectedRadio("existing");
+    } else {
+      setSelectedRadioChecked(false);
+      setSelectedRadio("direct");
     }
   }, [facebookUserList]);
 
@@ -63,9 +74,9 @@ export default function DataSource() {
       const response = await fetch("http://localhost:3000/api/auth/signin");
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
       window.open(
-        'http://localhost:3000/api/auth/signin',
-        'facebook-window',
-        'width=600,height=400,scrollbar=yes,noopener'
+        "http://localhost:3000/api/auth/signin",
+        "facebook-window",
+        "width=600,height=400,scrollbar=yes,noopener"
       );
 
       // const jsonData = (await response.json()).data;
@@ -75,6 +86,9 @@ export default function DataSource() {
   };
 
   const handleRadioButton = (event: any) => {
+    if (event.target.value === "direct") {
+      setSelectedRadioChecked(false);
+    }
     setSelectedRadio(event.target.value);
   };
 
@@ -99,10 +113,8 @@ export default function DataSource() {
       image: session?.user?.image,
     };
     dispatch(facebookAsync(params)).then((res: any) => {
-      if (res?.payload?.data?.token) {
-        router.push("/");
-        localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
-      }
+      // localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
+      fetchFacebookList();
     });
   };
 
@@ -111,20 +123,43 @@ export default function DataSource() {
   };
 
   return (
-    <div className="flex pb-8 gap-8 flex-col" onChange={handleRadioButton}>
-      <div className="flex gap-4 items-center w-[700px]">
+    <div className="flex gap-8 flex-col">
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-2xl">Select Account</h1>
+        <button
+          onClick={
+            selectedRadio === "" || selectedRadio === "direct"
+              ? () => {}
+              : handleSetDataAndMoveToNext
+          }
+          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
+            selectedRadio === "" || selectedRadio === "direct"
+              ? " opacity-50 cursor-not-allowed"
+              : ""
+          }`}
+        >
+          Next
+        </button>
+      </div>
+
+      <div
+        className="flex gap-4 items-center w-[700px]"
+        onChange={handleRadioButton}
+      >
         <input
           type="radio"
           id={selectedRadio}
           name={selectedRadio}
           value={"existing"}
+          checked={selectedRadioChecked}
           disabled={optionList.length === 0}
         />
         <label>Use Existing Auth</label>
 
         <div className="w-[300px]">
           <Select
-            defaultValue={selectedOption}
+            value={selectedFacebookUser || optionList[0]}
+            defaultValue={optionList[0]}
             onChange={handleUseExistingAuth}
             options={optionList}
             isDisabled={selectedRadio !== "existing"}
@@ -138,10 +173,11 @@ export default function DataSource() {
           id={selectedRadio}
           name={selectedRadio}
           value={"direct"}
+          checked={!selectedRadioChecked}
         />
         <label>Use Direct login</label>
         {selectedRadio === "direct" && selectedDataSource === "Facebook" ? (
-          <div onClick={handleSelectedOption}>
+          <div className="cursor-pointer" onClick={handleSelectedOption}>
             <Image
               src={FacebookIcon}
               alt="Picture of the author"
@@ -152,30 +188,6 @@ export default function DataSource() {
         ) : (
           ""
         )}
-      </div>
-      {/* <div className="inline-flex justify-end">
-        <button
-          onClick={() => router.push("/dataSource")}
-          className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-l"
-        >
-          Prev
-        </button>
-        <button
-          onClick={() => router.push("selectAttributes")}
-          className="bg-gray-300 hover:bg-gray-400  font-bold py-2 px-4 rounded-r"
-        >
-          Next
-        </button>
-      </div> */}
-      <div className="flex justify-center">
-        <button
-          onClick={selectedRadio === "" ? () => {} : handleSetDataAndMoveToNext}
-          className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
-            selectedRadio === "" ? " opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          Save & Next
-        </button>
       </div>
     </div>
   );

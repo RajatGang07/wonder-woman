@@ -21,7 +21,7 @@ const TabsComponent = () => {
                 className={`flex items-center pb-4 gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 `}
                 onClick={handleNavigate("/create-data-stream/source")}
               >
-                Select Data Source
+                Data Source
               </div>
               <div
                 className={`${
@@ -51,7 +51,7 @@ const TabsComponent = () => {
                 onClick={handleNavigate("/create-data-stream/attributes")}
                 className="flex items-center pb-4  gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 "
               >
-                Select Attributes
+                Attributes
               </div>
               <div
                 className={`${

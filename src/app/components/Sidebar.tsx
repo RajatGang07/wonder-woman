@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { MdDashboard, MdPeople, MdOutlineSettings } from "react-icons/md";
+import { MdDashboard, MdPeople, MdOutlineSettings, MdOutlineReceipt } from "react-icons/md";
 
 export default function Sidebar({ show }: any) {
   const pathname = usePathname();
@@ -14,7 +14,7 @@ export default function Sidebar({ show }: any) {
 
   const MenuItem = ({ icon, name, route }: any) => {
     const colorClass =
-      pathname === route
+      pathname === route || (route === '/dataStreamConfigs' && pathname.includes('create-data-stream'))
         ? "text-white bg-secondary"
         : "text-black hover:text-secondary";
 
@@ -38,16 +38,18 @@ export default function Sidebar({ show }: any) {
       </div>
       <div className="flex flex-col">
         <MenuItem
+          name="Data Stream Configs"
+          route="/dataStreamConfigs"
+          icon={<MdOutlineSettings />}
+        />
+        <MenuItem
           name="Monitor Data Stream"
           route="/dataStream"
           icon={<MdDashboard />}
         />
         <MenuItem name="Connections" route="/connections" icon={<MdPeople />} />
-        <MenuItem
-          name="Data Stream Configs"
-          route="/dataStreamConfigs"
-          icon={<MdOutlineSettings />}
-        />
+        <MenuItem name="Reports" route="/reports" icon={<MdOutlineReceipt />} />
+
       </div>
     </aside>
   );

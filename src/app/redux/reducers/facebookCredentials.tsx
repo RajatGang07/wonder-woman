@@ -50,8 +50,6 @@ const facebookCredSlice = createSlice({
       })
       .addCase(facebookAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        // state.isAuthenticated = true;
-        // state.name = action.payload.data;
       })
       .addCase(facebookAsync.rejected, (state: any, action: any) => {
         state.status = "failed";

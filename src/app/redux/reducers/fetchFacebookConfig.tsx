@@ -5,7 +5,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   configData: null,
-  // isAuthenticated: false,
   status: "idle",
   error: null,
 };
@@ -48,12 +47,10 @@ const fetchfacebookConfigSlice = createSlice({
       })
       .addCase(fetchFacebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        // state.isAuthenticated = true;
         state.configData = action.payload.data.facebookConfig;
       })
       .addCase(fetchFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
-        // state.error = action.payload;
         state.configData = [];
       });
   },

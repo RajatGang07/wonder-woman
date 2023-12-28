@@ -16,8 +16,12 @@ export default function DataSource(props: any) {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const state = useSelector((state: any) => state);
+
+  console.log("state", state);
   const selectedDataSource = useSelector(
-    (state: any) => state?.storeFacebookInfoReducer?.selectedDataSource
+    (state: any) =>
+      state?.storeFacebookInfoReducer?.selectedKeys?.selectedDataSource
   );
 
   const handleSetDataAndMoveToNext = () => {
@@ -26,12 +30,31 @@ export default function DataSource(props: any) {
 
   return (
     <div className="pb-8 h-[78%] position: relative">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="font-bold text-2xl">Select Data Source</h1>
+        <button
+          onClick={
+            selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {}
+          }
+          className={`bg-transparent mr-10  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
+            selectedDataSource === "" ? " opacity-50 cursor-not-allowed" : ""
+          }`}
+        >
+          Next
+        </button>
+      </div>
       <div className="flex pb-8 gap-12 flex-row radio-container">
         <div
           className="flex gap-4"
           onClick={() => dispatch(setSelectedDataSource("Facebook"))}
         >
-          <input type="radio" id="radio1" name="image" />
+          <input
+            type="radio"
+            id="radio1"
+            name="image"
+            value={selectedDataSource}
+            checked={selectedDataSource}
+          />
           <label>
             <Image
               src={FacebookIcon}
@@ -91,7 +114,7 @@ export default function DataSource(props: any) {
           </label>
         </div>
         <div className="flex gap-4">
-          <input type="radio" id="radio3" name="image" />
+          <input type="radio" id="radio3" name="image" disabled />
           <label>
             <Image
               src={DriveIcon}
@@ -111,19 +134,6 @@ export default function DataSource(props: any) {
           Next
         </button>
       </div> */}
-
-      <footer className=" flex justify-end items-center bg-white shadow-3xl position: absolute bottom-0 w-[106%] h-[100px] ml-[-48px]">
-        <button
-          onClick={
-            selectedDataSource !== "" ? handleSetDataAndMoveToNext : () => {}
-          }
-          className={`bg-transparent mr-10  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
-            selectedDataSource === "" ? " opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          Next
-        </button>
-      </footer>
     </div>
   );
 }

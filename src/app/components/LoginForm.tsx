@@ -25,7 +25,7 @@ const LoginForm = () => {
     const data = { email: values.email, password: values.password };
     dispatch(loginAsync(data)).then((res: any) => {
       if (res?.payload?.data?.token) {
-        router.push("/dataStream");
+        router.push("/dataStreamConfigs");
         localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
       }
     });

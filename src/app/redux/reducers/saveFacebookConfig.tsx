@@ -4,8 +4,6 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  // user: null,
-  // isAuthenticated: false,
   status: "idle",
   error: null,
 };
@@ -52,12 +50,9 @@ const faebookConfigSlice = createSlice({
       })
       .addCase(facebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        // state.isAuthenticated = true;
-        // state.user = action.payload.data;
       })
       .addCase(facebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
-        // state.error = action.payload;
       });
   },
 });

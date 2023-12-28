@@ -1,7 +1,7 @@
-import SelectAttribute from '../../components/selectAttribute';
+import Attribute from '../../components/Attribute';
 
-export default function SelectAttributePage() {
+export default function AttributePage() {
   return (
-      <SelectAttribute />
+      <Attribute />
   );
 }
