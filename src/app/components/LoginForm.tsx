@@ -44,7 +44,7 @@ const LoginForm = () => {
             />
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold text-black leading-tight tracking-tight  md:text-2x">
               Sign in to your account
             </h1>
             <form
@@ -55,14 +55,14 @@ const LoginForm = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm font-medium  dark:text-white"
+                  className="block mb-2 text-sm font-medium"
                 >
                   Your email*
                 </label>
                 <input
                   type="email"
                   {...register("email")}
-                  className=" border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className=" border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-40 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required={true}
                 />
@@ -70,7 +70,7 @@ const LoginForm = () => {
               <div>
                 <label
                   htmlFor="password"
-                  className="block mb-2 text-sm font-medium  dark:text-white"
+                  className="block mb-2 text-sm font-medium"
                 >
                   Password*
                 </label>
@@ -78,7 +78,7 @@ const LoginForm = () => {
                   type="password"
                   {...register("password")}
                   placeholder="••••••••"
-                  className=" border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className=" border border-gray-300  sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-40 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required={true}
                 />
               </div>

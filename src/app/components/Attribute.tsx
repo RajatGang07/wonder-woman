@@ -4,6 +4,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import CreatableSelect from "react-select/creatable";
 
 import { useSession } from "next-auth/react";
 import { adAccountAsync } from "../redux/reducers/adAccounts";
@@ -16,14 +17,7 @@ export default function Attribute(props: any) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [adInsights, setAdInsights] = useState([]);
-  const [campaignInsights, setCampaignInsights] = useState([]);
-  const [adSetInsights, setAdSetInsights] = useState([]);
-  const [accountLevel, setAccountLevel] = useState([]);
-  const [creativeLevel, setCreativeLevel] = useState([]);
-  const [adSetLevel, setAdSetLevel] = useState([]);
-  const [adSetFields, setAdSetFields] = useState([]);
-
+  const [fieldList, setFieldList] = useState<any>({});
   const [selectedKeys, setSelectedKeys] = useState<any>({
     configName: "",
     account: "",
@@ -42,6 +36,9 @@ export default function Attribute(props: any) {
     },
     selectedDays: [],
     cron: "0 0 28-31 * *", //  job will run every day from the 28th to the 31st day of the month at midnight (0:00).
+    selectedDatePreset: {},
+    selectedBreakdowns: [],
+    selectedTimeIncrement: {},
   });
   const [options, setOptions] = useState({
     accounts: [],
@@ -49,13 +46,15 @@ export default function Attribute(props: any) {
     fields: FIELDS,
   });
 
-  const state =
-  useSelector((state: any) => state) || [];
+  const state = useSelector((state: any) => state) || [];
 
-  console.log('state', state);
+  console.log("state", state);
 
   const { accessToken } =
-  useSelector((state: any) => state.storeFacebookInfoReducer.selectedKeys.selectedFacebookUser) || [];
+    useSelector(
+      (state: any) =>
+        state.storeFacebookInfoReducer.selectedKeys.selectedFacebookUser
+    ) || [];
 
   const { adAccounts } =
     useSelector((state: any) => state.adAccountReducer) || [];
@@ -66,64 +65,40 @@ export default function Attribute(props: any) {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if(selectedKeys?.account){
+    if (selectedKeys?.account) {
       fetchDropdownData();
     }
   }, [selectedKeys?.account]);
   const backendURL = "http://localhost:8080";
 
   const fetchDropdownData = async () => {
-    const adInsightsResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "adInsights" }
-    );
-    setAdInsights(adInsightsResponse?.data?.data);
-
-    const campaignInsightsResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "campaignInsights" }
-    );
-    setCampaignInsights(campaignInsightsResponse?.data?.data);
-
-    const adSetInsightsResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "adSetInsights" }
-    );
-    setAdSetInsights(adSetInsightsResponse?.data?.data);
-
-    const accountLevelResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "accountLevel" }
-    );
-    setAccountLevel(accountLevelResponse?.data?.data);
-
-    const creativeLevelResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "creativeLevel" }
-    );
-    setCreativeLevel(creativeLevelResponse?.data?.data);
-
-    const adSetLevelResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "adSetLevel" }
-    );
-    setAdSetLevel(adSetLevelResponse?.data?.data);
-
-    const campaignFieldsResponse = await axios.post(
-      `${backendURL}/api/v1/ad/insights/fields`,
-      { insightName: "adSetFields" }
-    );
-    setAdSetFields(campaignFieldsResponse?.data?.data);
+    const { data } = await axios.post(`${backendURL}/api/v1/get/all/fields`, {
+      insightNameList: [
+        "adInsights",
+        "campaignInsights",
+        "adSetInsights",
+        "accountLevel",
+        "creativeLevel",
+        "adSetLevel",
+        "adSetFields",
+        "datePreset",
+        "breakdowns",
+      ],
+    });
+    setFieldList(data?.data);
 
     setSelectedKeys({
       ...selectedKeys,
-      selectedAdInsights: adInsightsResponse?.data?.data,
-      selectedCampaignInsights: campaignInsightsResponse?.data?.data,
-      selectedAdSetInsights: adSetInsightsResponse?.data?.data,
-      selectedAccountLevel: accountLevelResponse?.data?.data,
-      selectedCreativeLevel: creativeLevelResponse?.data?.data,
-      selectedAdSetLevel: adSetLevelResponse?.data?.data,
-      selectedAdSetFields: campaignFieldsResponse?.data?.data,
+      selectedAdInsights: data?.data["adInsights"],
+      selectedCampaignInsights: data?.data["campaignInsights"],
+      selectedAdSetInsights: data?.data["adSetInsights"],
+      selectedAccountLevel: data?.data["accountLevel"],
+      selectedCreativeLevel: data?.data["creativeLevel"],
+      selectedAdSetLevel: data?.data["adSetLevel"],
+      selectedAdSetFields: data?.data["adSetFields"],
+      selectedDatePreset: { label: "last_30d", value: "last_30d" },
+      selectedBreakdowns: data?.data["breakdowns"],
+      selectedTimeIncrement: { label: "monthly", value: "monthly" },
     });
   };
 
@@ -224,13 +199,12 @@ export default function Attribute(props: any) {
 
   const handleSetDataAndMoveToNext = async () => {
     await dispatch(setSelectedKeysInfo(selectedKeys));
-    // await dispatch(facebookConfigAsync(selectedKeys));
     router.push("/create-data-stream/preview");
   };
 
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
-        <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6">
         <h1 className="font-bold text-2xl">Select Attributes</h1>
         <button
           onClick={
@@ -252,226 +226,159 @@ export default function Attribute(props: any) {
       />
       {selectedKeys?.configName && (
         <>
-          <div className="grid grid-cols-12 gap-4">
-            <div className="col-span-2">
+          <div className="grid grid-cols gap-4">
+            <>
               <label>Accounts*</label>
 
               <Select
-                defaultValue={options?.fields[0]}
-                options={options?.fields}
-                isDisabled
-              />
-            </div>
-            <div className="col-span-10">
-              <label>Accounts*</label>
-
-              <Select
-                defaultValue={selectedOption}
+                // defaultValue={selectedOption}
                 onChange={onHandleAccountsChange}
                 options={options?.accounts}
                 value={selectedKeys?.account}
               />
-            </div>
+            </>
           </div>
           {selectedKeys.account && (
             <>
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Campaigns*</label>
 
                   <Select
-                    defaultValue={options?.fields[1]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
-                    defaultValue={selectedOption}
+                    // defaultValue={selectedOption}
                     options={options?.campaigns}
                     onChange={handleChange("campaign")}
                     value={selectedKeys?.campaign}
                     isMulti
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Ad Insights</label>
 
                   <Select
-                    defaultValue={options?.fields[2]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
-                    options={adInsights}
+                    options={fieldList["adInsights"]}
                     onChange={handleChange("selectedAdInsights")}
                     value={selectedKeys?.selectedAdInsights}
                     isMulti
                   />
-                </div>
+                </>
               </div>
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Campaign Insights</label>
 
                   <Select
-                    defaultValue={options?.fields[3]}
-                    // onChange={handleSelectedOption}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
-                    options={campaignInsights}
+                    options={fieldList["campaignInsights"]}
                     isMulti
                     value={selectedKeys?.selectedCampaignInsights}
                     onChange={handleChange("selectedCampaignInsights")}
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Ad Set Insights</label>
 
                   <Select
-                    defaultValue={options?.fields[4]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
                     isMulti
-                    options={adSetInsights}
+                    options={fieldList["adSetInsights"]}
                     value={selectedKeys?.selectedAdSetInsights}
                     onChange={handleChange("selectedAdSetInsights")}
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Account Level</label>
 
                   <Select
-                    defaultValue={options?.fields[5]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
                     isMulti
-                    options={accountLevel}
+                    options={fieldList["accountLevel"]}
                     value={selectedKeys?.selectedAccountLevel}
                     onChange={handleChange("selectedAccountLevel")}
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Creative Level</label>
 
                   <Select
-                    defaultValue={options?.fields[6]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
-                    options={creativeLevel}
+                    options={fieldList["creativeLevel"]}
                     isMulti
                     value={selectedKeys?.selectedCreativeLevel}
                     onChange={handleChange("selectedCreativeLevel")}
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Ad Set Level</label>
 
                   <Select
-                    defaultValue={options?.fields[7]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
-                  <Select
-                    options={adSetLevel}
+                    options={fieldList["adSetLevel"]}
                     value={selectedKeys?.selectedAdSetLevel}
                     onChange={handleChange("selectedAdSetLevel")}
                     isMulti
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>AdSet Fields</label>
-
-                  <Select
-                    defaultValue={options?.fields[8]}
-                    options={options?.fields}
-                    isDisabled
-                  />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
-
                   <Select
                     isMulti
-                    options={adSetFields}
+                    options={fieldList["adSetFields"]}
                     value={selectedKeys?.selectedAdSetFields}
                     onChange={handleChange("selectedAdSetFields")}
                   />
-                </div>
+                </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4">
-                <div className="col-span-2">
+              <div className="grid grid-cols gap-4">
+                <>
                   <label>Date Preset</label>
-
                   <Select
-                    defaultValue={options?.fields[9]}
-                    options={options?.fields}
-                    isDisabled
+                    options={fieldList["datePreset"]}
+                    value={selectedKeys?.selectedDatePreset}
+                    onChange={handleChange("selectedDatePreset")}
+                    isClearable
                   />
-                </div>
-                <div className="col-span-10">
-                  <label>Values</label>
+                </>
+              </div>
 
+              <div className="grid grid-cols gap-4">
+                <>
+                  <label>Breakdown</label>
                   <Select
                     isMulti
-                    options={adSetFields}
-                    value={selectedKeys?.selectedAdSetFields}
-                    onChange={handleChange("datePreset")}
+                    options={fieldList["breakdowns"]}
+                    value={selectedKeys?.selectedBreakdowns}
+                    onChange={handleChange("selectedBreakdowns")}
                   />
-                </div>
+                </>
+              </div>
+
+              <div className="grid grid-cols gap-4">
+                <>
+                  <label>Time Increment</label>
+                  <CreatableSelect
+                    options={[
+                      { label: "monthly", value: "monthly" },
+                      { label: "all_days", value: "all_days" },
+                    ]}
+                    value={selectedKeys?.selectedTimeIncrement}
+                    onChange={handleChange("selectedTimeIncrement")}
+                  />
+                </>
               </div>
 
               <div className="grid grid-cols-12 gap-4 mt-10">
@@ -508,7 +415,6 @@ export default function Attribute(props: any) {
           )}
         </>
       )}
-
     </div>
   );
 }

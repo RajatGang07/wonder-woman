@@ -48,6 +48,12 @@ export default function Sidebar({ show }: any) {
           icon={<MdDashboard />}
         />
         <MenuItem name="Connections" route="/connections" icon={<MdPeople />} />
+
+        <div
+        className={`text-[#000]  flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-white/10 text-xl`}
+      >
+        Performance Reports 
+      </div>
         <MenuItem name="Reports" route="/reports" icon={<MdOutlineReceipt />} />
 
       </div>

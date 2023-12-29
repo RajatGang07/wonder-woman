@@ -21,6 +21,9 @@ const selectedKeyInitialState = {
     selectedDays: [],
     cron: "0 0 28-31 * *",
     selectedFacebookUser: {},
+    datePreset: {},
+    breakdowns: [],
+    timeIncrement: {},
   },
 };
 
@@ -50,6 +53,12 @@ const selectedKeySlice = createSlice({
       state.selectedKeys.configDays = action?.payload?.configDays;
       state.selectedKeys.selectedDays = action?.payload?.selectedDays;
       state.selectedKeys.cron = action?.payload?.cron;
+      state.selectedKeys.datePreset =
+        action?.payload?.selectedDatePreset;
+      state.selectedKeys.breakdowns =
+        action?.payload?.selectedBreakdowns;
+      state.selectedKeys.timeIncrement =
+        action?.payload?.selectedTimeIncrement;
     },
     setSelectedDataSource: (state, action) => {
       state.selectedKeys.selectedDataSource = action.payload;
@@ -65,7 +74,9 @@ export const { setSelectedDataSource }: any = selectedKeySlice.actions;
 export const { setSelectedFacebookUser }: any = selectedKeySlice.actions;
 
 export const selectedKeyInfo = (state: any) => state.selectedKeys;
-export const selectedDataSource = (state: any) => state.selectedKeys.selectedDataSource;
-export const selectedFacebookUser = (state: any) => state.selectedKeys.selectedFacebookUser;
+export const selectedDataSource = (state: any) =>
+  state.selectedKeys.selectedDataSource;
+export const selectedFacebookUser = (state: any) =>
+  state.selectedKeys.selectedFacebookUser;
 
 export default selectedKeySlice.reducer;

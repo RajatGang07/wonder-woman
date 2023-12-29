@@ -35,7 +35,6 @@ const ConenctionListing = () => {
     });
   };
 
-  console.log("facebookUserList", facebookUserList);
   return (
     <section className="pb-8 gap-12">
       <Lisitng data={facebookUserList} handleDisconnect={handleDisconnect} />
