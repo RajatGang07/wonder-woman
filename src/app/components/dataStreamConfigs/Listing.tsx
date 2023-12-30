@@ -1,16 +1,20 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Loader } from "../Loader";
+import { Loader } from "../../assets/icons/Loader";
 import { columns } from "./constant";
+import { InfoIcon } from "../../assets/icons/InfoIcon";
 
-const Lisitng = ({ data, handleDelete }: any) => {
+import styles from "./list.module.css";
+
+const Lisitng = ({
+  data,
+  handleDelete,
+  runSingleConfig,
+  loading,
+  selectedIndex,
+}: any) => {
   const router = useRouter();
-
-  const handleDownload = (path: any) => () => {
-    if (path === "NA") return;
-    window.open(path);
-  };
   const handleNavigate = (route: any) => () => {
     router.push(route);
   };
@@ -65,15 +69,36 @@ const Lisitng = ({ data, handleDelete }: any) => {
                     {row?.selectedDataSource}
                   </td>
                   <td className="w-[200px] p-[12px]">
-                    {row?.configDays?.label}
+                    <div className="inline-flex gap-4 ">
+                      {row?.configDays?.label}
+
+                      {row?.configDays?.label !== "Months" && (
+                        <div className={styles.tooltip}>
+                          <InfoIcon />
+                          <span className={styles.tooltiptext}>
+                            {selectedDay?.map((item: any) => {return <div>{item}</div>})}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td className="w-[200px] p-[12px] border-r-[1px] border-r-shinyGray">
                     <div className="flex gap-4">
                       <button
-                        onClick={handleDownload(row?.filePath)}
-                        className="border-[1px] border-successGreen text-successGreen p-1 rounded w-[100px]"
+                        onClick={runSingleConfig(row?.id, rowIndex)}
+                        className={`border-[1px] border-successGreen text-successGreen p-1 rounded w-[100px] ${
+                          loading && selectedIndex === rowIndex
+                            ? "flex items-center"
+                            : ""
+                        }`}
                       >
-                        <Loader />
+                        {loading && selectedIndex === rowIndex ? (
+                          <div className="ml-1">
+                            <Loader isLoading={true} />
+                          </div>
+                        ) : (
+                          ""
+                        )}
                         Run
                       </button>
                       <button

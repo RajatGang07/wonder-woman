@@ -2,6 +2,7 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState = {
   // user: null,
@@ -9,7 +10,6 @@ const initialState = {
   status: "idle",
   error: null,
 };
-const backendURL = "http://localhost:8080";
 
 export const deleteFacebookConfigAsync: any = createAsyncThunk(
   "faebook/config",
@@ -21,7 +21,7 @@ export const deleteFacebookConfigAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/facebook/config/delete`,
+        `${DOMAIN_URL.prod}/api/v1/facebook/config/delete`,
         credentials,
         config
       );

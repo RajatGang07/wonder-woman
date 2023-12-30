@@ -2,13 +2,13 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState: any = {
   status: "idle",
   error: null,
   facebookList: []
 };
-const backendURL = "http://localhost:8080";
 
 export const facebookGetDetailsAsync: any = createAsyncThunk(
   "facebook/get",
@@ -20,7 +20,7 @@ export const facebookGetDetailsAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/facebook/auth`,
+        `${DOMAIN_URL.prod}/api/v1/facebook/auth`,
         credentials,
         config
       );
@@ -52,7 +52,7 @@ const facebookGetUserListSlice = createSlice({
       })
       .addCase(facebookGetDetailsAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        state.facebookList = action.payload.data.existingFacebookUserList;
+        state.facebookList = action.payload.data.data;
       })
       .addCase(facebookGetDetailsAsync.rejected, (state: any, action: any) => {
         state.status = "failed";

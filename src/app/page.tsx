@@ -12,7 +12,7 @@ const Dashboard = (props: any) => {
     authData = localStorage.getItem("auth");
   }
 
-  console.log(props)
+  console.log(process, 'process')
   return (
     <>
       {typeof window !== "undefined" && JSON?.parse(authData)?.token ? (

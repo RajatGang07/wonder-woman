@@ -3,6 +3,8 @@ import React from "react";
 import moment from "moment";
 
 import { MdDownload } from "react-icons/md";
+import { InfoIcon } from "../../assets/icons/InfoIcon";
+import styles from "./list.module.css";
 
 const Lisitng = ({ data }: any) => {
 
@@ -13,7 +15,6 @@ const Lisitng = ({ data }: any) => {
     "Status",
     "Message",
     "Duration",
-    "Selected Days",
     "Created On",
     "Actions",
   ];
@@ -28,7 +29,7 @@ const Lisitng = ({ data }: any) => {
         <h1 className="font-bold text-2xl">Data Stream Listing</h1>
       </div>
 
-      <div className="overflow-x-auto w-[100%] border-solid mt-4">
+      <div className="w-[100%] border-solid mt-4">
         <table className=" border-collapse  mt-8 w-[100%]">
           <thead>
             <tr>
@@ -101,12 +102,17 @@ const Lisitng = ({ data }: any) => {
                     </td>
                     <td className="w-[300px] pl-8">{row?.message}</td>
                     <td className="w-[200px] pl-8">
+                    <div className="inline-flex gap-4 ">
                       {row?.configDays?.label}
-                    </td>
-                    <td className="w-[200px] pl-8">
-                      {row?.selectedDays.length > 0
-                        ? selectedDay.toString()
-                        : "-"}
+                      {row?.configDays?.label !== "Months" && (
+                        <div className={styles.tooltip}>
+                          <InfoIcon />
+                          <span className={styles.tooltiptext}>
+                            {selectedDay?.map((item: any) => {return <div>{item}</div>})}
+                          </span>
+                        </div>
+                      )}
+                      </div>
                     </td>
                     <td className="w-[200px] pl-8">
                       {moment(row?.createdAt).format("YYYY-MM-DD HH:mm:ss")}

@@ -2,13 +2,13 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState: any = {
   status: "idle",
   error: null,
   csvList: []
 };
-const backendURL = "http://localhost:8080";
 
 export const generateCSVAsync: any = createAsyncThunk(
   "generate/Csv",
@@ -20,7 +20,7 @@ export const generateCSVAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/generate/csv`,
+        `${DOMAIN_URL.prod}/api/v1/generate/csv`,
         credentials,
         config
       );

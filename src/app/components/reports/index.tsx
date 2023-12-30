@@ -1,16 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { DOMAIN_URL } from "../../services";
 
 export default function DataSource() {
   const [reportList, setReportList] = useState([]);
 
-  const backendURL = "http://localhost:8080";
-
   const handleFetchLogs = async () => {
     const userData: any = localStorage.getItem("auth");
     const creativeLevelResponse = await axios.post(
-      `${backendURL}/api/v1/report`,
+      `${DOMAIN_URL.prod}/api/v1/report`,
       { userId: JSON?.parse(userData)?.userId }
     );
     setReportList(creativeLevelResponse?.data?.facebookConfig);
@@ -19,11 +18,11 @@ export default function DataSource() {
   useEffect(() => {
     handleFetchLogs();
   }, []);
-  
+
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="font-bold text-2xl">Reports</h1>
+        <h1 className="font-bold text-2xl">Performance Reports</h1>
       </div>
       <div className="flex pb-8 gap-8">
         {reportList?.map((item: any) => {
@@ -37,7 +36,7 @@ export default function DataSource() {
                     item?.url === "" ? " opacity-50 cursor-not-allowed" : ""
                   }`}
                 >
-                  Report
+                  View
                 </button>
               </div>
             </div>

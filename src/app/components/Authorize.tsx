@@ -10,6 +10,7 @@ import FacebookIcon from "../assets/Facebook.jpg";
 import { facebookGetDetailsAsync } from "../redux/reducers/facebookGetCredentials";
 import { facebookAsync } from "../redux/reducers/facebookCredentials";
 import { setSelectedFacebookUser } from "../redux/reducers/storeFacebookInfo";
+import { DOMAIN_URL } from "../services";
 
 export default function DataSource() {
   const [optionList, setOptionList] = useState<any>([]);
@@ -71,10 +72,10 @@ export default function DataSource() {
 
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/signin");
+      const response = await fetch(`${DOMAIN_URL.prod}/api/auth/signin`);
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
       window.open(
-        "http://localhost:3000/api/auth/signin",
+        `${DOMAIN_URL.prod}/api/auth/signin`,
         "facebook-window",
         "width=600,height=400,scrollbar=yes,noopener"
       );

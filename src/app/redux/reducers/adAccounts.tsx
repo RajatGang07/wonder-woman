@@ -2,6 +2,7 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState = {
   adAccounts: null,
@@ -9,7 +10,6 @@ const initialState = {
   status: "idle",
   error: null,
 };
-const backendURL = "http://localhost:8080";
 
 export const adAccountAsync: any = createAsyncThunk(
   "adAccount/",
@@ -21,7 +21,7 @@ export const adAccountAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/integrations/facebook_ads/ad_accounts`,
+        `${DOMAIN_URL.prod}/api/integrations/facebook_ads/ad_accounts`,
         credentials,
         config
       );
@@ -53,7 +53,7 @@ const adAccountSlice = createSlice({
       .addCase(adAccountAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        state.adAccounts = action.payload.data.response.data;
+        state.adAccounts = action.payload.data.data.data;
       })
       .addCase(adAccountAsync.rejected, (state: any, action: any) => {
         state.status = "failed";

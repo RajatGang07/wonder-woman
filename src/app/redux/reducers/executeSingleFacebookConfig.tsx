@@ -6,11 +6,12 @@ import { DOMAIN_URL } from "../../services";
 
 const initialState = {
   status: "idle",
+  loading: false,
   error: null,
 };
 
-export const facebookConfigAsync: any = createAsyncThunk(
-  "faebook/config",
+export const executeSingleFacebookConfigAsync: any = createAsyncThunk(
+  "facebook/execute",
   async (credentials, { rejectWithValue }) => {
     try {
       const config = {
@@ -19,7 +20,7 @@ export const facebookConfigAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${DOMAIN_URL.prod}/api/v1/facebook/config`,
+        `${DOMAIN_URL.prod}/api/v1/generate/csv/single/config`,
         credentials,
         config
       );
@@ -34,29 +35,25 @@ export const facebookConfigAsync: any = createAsyncThunk(
   }
 );
 
-const faebookConfigSlice = createSlice({
-  name: "faebookConfig",
+const executeSingleFacebookConfigSlice = createSlice({
+  name: "SingleFetchfaebookConfig",
   initialState,
-  reducers: {
-    logout: (state: any) => {
-      state.user = null;
-      state.isAuthenticated = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(facebookConfigAsync.pending, (state: any) => {
+      .addCase(executeSingleFacebookConfigAsync.pending, (state: any) => {
         state.status = "loading";
+        state.loading = true
       })
-      .addCase(facebookConfigAsync.fulfilled, (state: any, action: any) => {
+      .addCase(executeSingleFacebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
+        state.loading = false
       })
-      .addCase(facebookConfigAsync.rejected, (state: any, action: any) => {
+      .addCase(executeSingleFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
+        state.loading = false
       });
   },
 });
 
-export const { logout } = faebookConfigSlice.actions;
-
-export default faebookConfigSlice.reducer;
+export default executeSingleFacebookConfigSlice.reducer;

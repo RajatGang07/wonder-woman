@@ -52,9 +52,9 @@ export default function Sidebar({ show }: any) {
         <div
         className={`text-[#000]  flex gap-1 [&>*]:my-auto text-md pl-6 py-3 border-b-[1px] border-b-white/10 text-xl`}
       >
-        Performance Reports 
+        Reports 
       </div>
-        <MenuItem name="Reports" route="/reports" icon={<MdOutlineReceipt />} />
+        <MenuItem name="Performance Reports" route="/reports" icon={<MdOutlineReceipt />} />
 
       </div>
     </aside>

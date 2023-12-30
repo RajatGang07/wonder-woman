@@ -8,6 +8,8 @@ import generateCSV from './reducers/generateCSV';
 import storeFacebookInfo from './reducers/storeFacebookInfo';
 import facebookGetUserListSlice from './reducers/facebookGetCredentials';
 import fetchfacebookConfigSlice from './reducers/fetchFacebookConfig';
+import executeSingleFacebookConfigSlice from './reducers/executeSingleFacebookConfig';
+import signUpSlice from './reducers/signUpSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
   generateCSVReducer: generateCSV,
   storeFacebookInfoReducer: storeFacebookInfo,
   facebookGetUserListReducer: facebookGetUserListSlice,
-  fetchfacebookConfigReducer: fetchfacebookConfigSlice
+  fetchfacebookConfigReducer: fetchfacebookConfigSlice,
+  executeSingleFacebookConfigSliceReducer: executeSingleFacebookConfigSlice,
+  signUpReducer: signUpSlice
 });
 
 export const store = configureStore({

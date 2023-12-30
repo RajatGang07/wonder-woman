@@ -2,12 +2,12 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState: any = {
   status: "idle",
   error: null,
 };
-const backendURL = "http://localhost:8080";
 
 export const facebookAsync: any = createAsyncThunk(
   "facebook/cred",
@@ -19,7 +19,7 @@ export const facebookAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/save/fb`,
+        `${DOMAIN_URL.prod}/api/save/fb`,
         credentials,
         config
       );

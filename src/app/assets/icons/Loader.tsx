@@ -4,7 +4,7 @@ export const Loader = ({ isLoading = false }: any) => {
   if (!isLoading) return;
   return (
     <svg
-      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+      className="animate-spin -ml-1 mr-3 h-5 w-5 text-successGreen"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

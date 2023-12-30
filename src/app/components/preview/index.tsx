@@ -8,6 +8,7 @@ import axios from "axios";
 import { facebookConfigAsync } from "../../redux/reducers/saveFacebookConfig";
 
 import Table from "./LisitngPreview";
+import { DOMAIN_URL } from "../../services";
 
 export default function ShowPreview() {
   const router = useRouter();
@@ -19,12 +20,11 @@ export default function ShowPreview() {
 
   const [csvTable, setCSVTable] = useState([]);
 
-  const backendURL = "http://localhost:8080";
 
   const handleGenerateCsv = async () => {
     const userData: any = localStorage.getItem("auth");
     const creativeLevelResponse = await axios.post(
-      `${backendURL}/api/v1/generate/csv`,
+      `${DOMAIN_URL.prod}/api/v1/generate/csv`,
       { userId: JSON?.parse(userData)?.userId }
     );
 

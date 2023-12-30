@@ -11,6 +11,7 @@ import { adAccountAsync } from "../redux/reducers/adAccounts";
 import { adCampaignAccountAsync } from "../redux/reducers/adCampaigns";
 import { setSelectedKeysInfo } from "../redux/reducers/storeFacebookInfo";
 import { configCron, days, FIELDS } from "./constant";
+import { DOMAIN_URL } from "../services";
 
 export default function Attribute(props: any) {
   const [selectedOption, setSelectedOption] = useState<any>(null);
@@ -69,10 +70,9 @@ export default function Attribute(props: any) {
       fetchDropdownData();
     }
   }, [selectedKeys?.account]);
-  const backendURL = "http://localhost:8080";
 
   const fetchDropdownData = async () => {
-    const { data } = await axios.post(`${backendURL}/api/v1/get/all/fields`, {
+    const { data } = await axios.post(`${DOMAIN_URL.prod}/api/v1/get/all/fields`, {
       insightNameList: [
         "adInsights",
         "campaignInsights",
@@ -97,7 +97,7 @@ export default function Attribute(props: any) {
       selectedAdSetLevel: data?.data["adSetLevel"],
       selectedAdSetFields: data?.data["adSetFields"],
       selectedDatePreset: { label: "last_30d", value: "last_30d" },
-      selectedBreakdowns: data?.data["breakdowns"],
+      // selectedBreakdowns: data?.data["breakdowns"],
       selectedTimeIncrement: { label: "monthly", value: "monthly" },
     });
   };
@@ -381,7 +381,7 @@ export default function Attribute(props: any) {
                 </>
               </div>
 
-              <div className="grid grid-cols-12 gap-4 mt-10">
+              <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-2">
                   <label>Schedule Data Stream</label>
 

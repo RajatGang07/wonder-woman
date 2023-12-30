@@ -2,13 +2,13 @@
 import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DOMAIN_URL } from "../../services";
 
 const initialState: any = {
   status: "idle",
   error: null,
   facebookList: []
 };
-const backendURL = "http://localhost:8080";
 
 export const facebookDisconnectDetailsAsync: any = createAsyncThunk(
   "facebook/get",
@@ -20,7 +20,7 @@ export const facebookDisconnectDetailsAsync: any = createAsyncThunk(
         },
       };
       const response: any = await axios.post(
-        `${backendURL}/api/v1/facebook/disconnect/auth`,
+        `${DOMAIN_URL.prod}/api/v1/facebook/disconnect/auth`,
         credentials,
         config
       );
