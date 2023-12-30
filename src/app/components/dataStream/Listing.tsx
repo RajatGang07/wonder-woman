@@ -30,7 +30,7 @@ const Lisitng = ({ data }: any) => {
       </div>
 
       <div className="w-[100%] border-solid mt-4">
-        <table className=" border-collapse  mt-8 w-[100%]">
+        <table className=" border-collapse   mt-8 w-[100%]">
           <thead>
             <tr>
               {columns.map((column: any, index: any) => (
@@ -62,7 +62,7 @@ const Lisitng = ({ data }: any) => {
                 );
                 return (
                   <tr
-                    className="border-b-[1px] text-lightBlack border-b-lightGray"
+                    className="border-b-[1px] text-lightBlack border-b-lightGray hover:bg-slate-50 "
                     key={rowIndex}
                   >
                     <td className="w-[200px] pl-8 border-l-[1px] border-l-shinyGray">
@@ -80,7 +80,6 @@ const Lisitng = ({ data }: any) => {
                           className="border-[1px] border-successGreen text-successGreen p-1 rounded"
                           style={{
                             padding: "6px",
-                            // backgroundColor: "#ABE098",
                             width: "100px",
                             borderRadius: "4px",
                           }}
@@ -89,10 +88,10 @@ const Lisitng = ({ data }: any) => {
                         </div>
                       ) : (
                         <div
+                        className="border-[1px] border-errorRed text-errorRed p-1 rounded w-[100px]"
                           style={{
                             padding: "8px",
-                            backgroundColor: "#ff0000",
-                            width: "100px",
+                            width: "120px",
                             borderRadius: "4px",
                           }}
                         >

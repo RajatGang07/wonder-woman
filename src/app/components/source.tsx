@@ -19,9 +19,9 @@ export default function DataSource(props: any) {
   const state = useSelector((state: any) => state);
 
   console.log("state", state);
-  const selectedDataSource = useSelector(
+  const {selectedDataSource, isView, isEdit} = useSelector(
     (state: any) =>
-      state?.storeFacebookInfoReducer?.selectedKeys?.selectedDataSource
+      state?.storeFacebookInfoReducer?.selectedKeys
   );
 
   const handleSetDataAndMoveToNext = () => {
@@ -54,6 +54,7 @@ export default function DataSource(props: any) {
             name="image"
             value={selectedDataSource}
             checked={selectedDataSource}
+            disabled={isView || isEdit ? true : false}
           />
           <label>
             <Image

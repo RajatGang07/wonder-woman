@@ -7,6 +7,7 @@ import { fetchFacebookConfigAsync } from "../../redux/reducers/fetchFacebookConf
 import Lisitng from "./Listing";
 import { deleteFacebookConfigAsync } from "../../redux/reducers/deleteFacebookConfig";
 import { executeSingleFacebookConfigAsync } from "../../redux/reducers/executeSingleFacebookConfig";
+import { setSelectedKeysInfo } from "../../redux/reducers/storeFacebookInfo";
 
 const DataStreamConfigsLisitng = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -37,7 +38,8 @@ const DataStreamConfigsLisitng = () => {
     router.push(route);
   };
 
-  const runSingleConfig = (id: any, rowIndex: any) => () => {
+  const runSingleConfig = (id: any, rowIndex: any) => (event: any) => {
+    event.stopPropagation();
     setSelectedIndex(rowIndex);
     dispatch(executeSingleFacebookConfigAsync({ id: id })).then((res: any) => {
       console.log(res, "res");
@@ -47,10 +49,35 @@ const DataStreamConfigsLisitng = () => {
     });
   };
 
-  const handleDelete = (id: any) => () => {
+  const handleDelete = (id: any) => (event: any) => {
+    event.stopPropagation();
     dispatch(deleteFacebookConfigAsync({ id: id })).then(() => {
       fetchAllConfigs();
     });
+  };
+
+  const handleEdit = (data: any) => (event: any) => {
+    event.stopPropagation();
+    dispatch(
+      setSelectedKeysInfo({
+        ...data,
+        isView: false,
+        isEdit: true,
+      })
+    );
+    handleNavigate(`/create-data-stream/source`);
+  };
+
+  const handleView = (data: any) => (event: any) => {
+    event.stopPropagation();
+    dispatch(
+      setSelectedKeysInfo({
+        ...data,
+        isView: true,
+        isEdit: false,
+      })
+    );
+    handleNavigate(`/create-data-stream/source`);
   };
 
   return (
@@ -61,6 +88,8 @@ const DataStreamConfigsLisitng = () => {
         runSingleConfig={runSingleConfig}
         loading={loading}
         selectedIndex={selectedIndex}
+        handleEdit={handleEdit}
+        handleView={handleView}
       />
     </section>
   );

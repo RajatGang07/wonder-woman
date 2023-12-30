@@ -23,11 +23,10 @@ export default function DataSource() {
 
   const userData: any = localStorage.getItem("auth");
 
-  const selectedDataSource =
-    useSelector(
-      (state: any) =>
-        state.storeFacebookInfoReducer.selectedKeys.selectedDataSource
-    ) || "";
+  const { selectedDataSource, isView, isEdit } = useSelector(
+    (state: any) => state?.storeFacebookInfoReducer?.selectedKeys
+  );
+
   const facebookUserList =
     useSelector(
       (state: any) => state.facebookGetUserListReducer.facebookList
@@ -72,10 +71,10 @@ export default function DataSource() {
 
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch(`${DOMAIN_URL.prod}/api/auth/signin`);
+      const response = await fetch(`http://localhost:3000/api/auth/signin`);
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
       window.open(
-        `${DOMAIN_URL.prod}/api/auth/signin`,
+        `http://localhost:3000/api/auth/signin`,
         "facebook-window",
         "width=600,height=400,scrollbar=yes,noopener"
       );
@@ -89,6 +88,9 @@ export default function DataSource() {
   const handleRadioButton = (event: any) => {
     if (event.target.value === "direct") {
       setSelectedRadioChecked(false);
+    } else{
+      setSelectedRadioChecked(true);
+
     }
     setSelectedRadio(event.target.value);
   };
@@ -145,7 +147,6 @@ export default function DataSource() {
 
       <div
         className="flex gap-4 items-center w-[700px]"
-        onChange={handleRadioButton}
       >
         <input
           type="radio"
@@ -153,7 +154,8 @@ export default function DataSource() {
           name={selectedRadio}
           value={"existing"}
           checked={selectedRadioChecked}
-          disabled={optionList.length === 0}
+          disabled={isView || isEdit ? true : optionList.length === 0}
+          onChange={handleRadioButton}
         />
         <label>Use Existing Auth</label>
 
@@ -163,7 +165,7 @@ export default function DataSource() {
             defaultValue={optionList[0]}
             onChange={handleUseExistingAuth}
             options={optionList}
-            isDisabled={selectedRadio !== "existing"}
+            isDisabled={isView || isEdit ? true : selectedRadio !== "existing"}
           />
         </div>
       </div>
@@ -175,9 +177,14 @@ export default function DataSource() {
           name={selectedRadio}
           value={"direct"}
           checked={!selectedRadioChecked}
+          onChange={handleRadioButton}
+          disabled={isView || isEdit ? true : false}
         />
         <label>Use Direct login</label>
-        {selectedRadio === "direct" && selectedDataSource === "Facebook" ? (
+        {selectedRadio === "direct" &&
+        selectedDataSource === "Facebook" &&
+        !isView &&
+        !isEdit ? (
           <div className="cursor-pointer" onClick={handleSelectedOption}>
             <Image
               src={FacebookIcon}

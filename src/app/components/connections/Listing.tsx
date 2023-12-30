@@ -38,7 +38,7 @@ const Lisitng = ({ data, handleDisconnect }: any) => {
               console.log("selectedDay", selectedDay);
               return (
                 <tr
-                  className="border-b-[1px] text-lightBlack border-b-lightGray"
+                  className="border-b-[1px] text-lightBlack border-b-lightGray hover:bg-slate-50 "
                   key={rowIndex}
                 >
                   <td className="w-[200px] p-[12px] border-l-[1px] border-l-shinyGray">

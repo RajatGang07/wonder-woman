@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+
 import { Loader } from "../../assets/icons/Loader";
 import { columns } from "./constant";
 import { InfoIcon } from "../../assets/icons/InfoIcon";
 
 import styles from "./list.module.css";
+import { setSelectedKeysInfo } from "../../redux/reducers/storeFacebookInfo";
 
 const Lisitng = ({
   data,
@@ -13,9 +16,42 @@ const Lisitng = ({
   runSingleConfig,
   loading,
   selectedIndex,
+  handleEdit,
+  handleView
 }: any) => {
   const router = useRouter();
-  const handleNavigate = (route: any) => () => {
+  const dispatch = useDispatch();
+
+  const handleNavigate = (route: any) => async () => {
+    await dispatch(
+      setSelectedKeysInfo({
+        id: "",
+        selectedDataSource: "",
+        configName: "",
+        account: "",
+        campaign: [],
+        userId: "",
+        selectedAdInsights: [],
+        selectedCampaignInsights: [],
+        selectedAdSetInsights: [],
+        selectedAccountLevel: [],
+        selectedCreativeLevel: [],
+        selectedAdSetLevel: [],
+        selectedAdSetFields: [],
+        configDays: {
+          label: "Months",
+          value: "Months",
+        },
+        selectedDays: [],
+        cron: "0 0 28-31 * *",
+        selectedFacebookUser: {},
+        datePreset: {},
+        breakdowns: [],
+        timeIncrement: {},
+        isView: false,
+        isEdit: false,
+      })
+    );
     router.push(route);
   };
   return (
@@ -58,8 +94,9 @@ const Lisitng = ({
               );
               return (
                 <tr
-                  className="border-b-[1px] text-lightBlack border-b-lightGray"
+                  className="border-b-[1px] text-lightBlack border-b-lightGray hover:bg-slate-50 cursor-pointer"
                   key={rowIndex}
+                  onClick={handleView(row)}
                 >
                   <td className="w-[200px] p-[12px] border-l-[1px] border-l-shinyGray">
                     {row?.configName}
@@ -84,6 +121,12 @@ const Lisitng = ({
                   </td>
                   <td className="w-[200px] p-[12px] border-r-[1px] border-r-shinyGray">
                     <div className="flex gap-4">
+                    <button
+                        onClick={handleEdit(row)}
+                        className="border-[1px] border-errorRed text-errorRed p-1 rounded w-[100px]"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={runSingleConfig(row?.id, rowIndex)}
                         className={`border-[1px] border-successGreen text-successGreen p-1 rounded w-[100px] ${
@@ -107,6 +150,7 @@ const Lisitng = ({
                       >
                         Delete
                       </button>
+
                     </div>
                   </td>
                 </tr>

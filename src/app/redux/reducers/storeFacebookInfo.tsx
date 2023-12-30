@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const selectedKeyInitialState = {
   selectedKeys: {
+    id: '',
     selectedDataSource: "",
     configName: "",
     account: "",
@@ -24,6 +25,8 @@ const selectedKeyInitialState = {
     datePreset: {},
     breakdowns: [],
     timeIncrement: {},
+    isView: false,
+    isEdit: false
   },
 };
 
@@ -54,11 +57,18 @@ const selectedKeySlice = createSlice({
       state.selectedKeys.selectedDays = action?.payload?.selectedDays;
       state.selectedKeys.cron = action?.payload?.cron;
       state.selectedKeys.datePreset =
-        action?.payload?.selectedDatePreset;
+        action?.payload?.datePreset;
       state.selectedKeys.breakdowns =
-        action?.payload?.selectedBreakdowns;
+        action?.payload?.breakdowns;
       state.selectedKeys.timeIncrement =
-        action?.payload?.selectedTimeIncrement;
+        action?.payload?.timeIncrement;
+      state.selectedKeys.id =
+        action?.payload?.id || '';
+      state.selectedKeys.isView = action?.payload?.isView || false;
+      state.selectedKeys.isEdit = action?.payload?.isEdit || false;
+      state.selectedKeys.selectedDataSource = action.payload.selectedDataSource || state.selectedKeys.selectedDataSource;
+      state.selectedKeys.selectedFacebookUser = action.payload.selectedFacebookUser ||  state.selectedKeys.selectedFacebookUser
+
     },
     setSelectedDataSource: (state, action) => {
       state.selectedKeys.selectedDataSource = action.payload;

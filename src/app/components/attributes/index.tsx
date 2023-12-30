@@ -7,55 +7,54 @@ import { useRouter } from "next/navigation";
 import CreatableSelect from "react-select/creatable";
 
 import { useSession } from "next-auth/react";
-import { adAccountAsync } from "../redux/reducers/adAccounts";
-import { adCampaignAccountAsync } from "../redux/reducers/adCampaigns";
-import { setSelectedKeysInfo } from "../redux/reducers/storeFacebookInfo";
-import { configCron, days, FIELDS } from "./constant";
-import { DOMAIN_URL } from "../services";
+import { adAccountAsync } from "../../redux/reducers/adAccounts";
+import { adCampaignAccountAsync } from "../../redux/reducers/adCampaigns";
+import { setSelectedKeysInfo } from "../../redux/reducers/storeFacebookInfo";
+import { configCron, days, FIELDS } from "../constant";
+import { DOMAIN_URL } from "../../services";
 
-export default function Attribute(props: any) {
-  const [selectedOption, setSelectedOption] = useState<any>(null);
+export default function Attribute() {
   const router = useRouter();
   const dispatch = useDispatch();
 
   const [fieldList, setFieldList] = useState<any>({});
-  const [selectedKeys, setSelectedKeys] = useState<any>({
-    configName: "",
-    account: "",
-    campaign: [],
-    userId: "",
-    selectedAdInsights: [],
-    selectedCampaignInsights: [],
-    selectedAdSetInsights: [],
-    selectedAccountLevel: [],
-    selectedCreativeLevel: [],
-    selectedAdSetLevel: [],
-    selectedAdSetFields: [],
-    configDays: {
-      label: "Months",
-      value: "Months",
-    },
-    selectedDays: [],
-    cron: "0 0 28-31 * *", //  job will run every day from the 28th to the 31st day of the month at midnight (0:00).
-    selectedDatePreset: {},
-    selectedBreakdowns: [],
-    selectedTimeIncrement: {},
-  });
   const [options, setOptions] = useState({
     accounts: [],
     campaigns: [],
     fields: FIELDS,
   });
 
-  const state = useSelector((state: any) => state) || [];
-
-  console.log("state", state);
-
   const { accessToken } =
     useSelector(
       (state: any) =>
         state.storeFacebookInfoReducer.selectedKeys.selectedFacebookUser
     ) || [];
+
+  const selectedKeys =
+    useSelector((state: any) => state.storeFacebookInfoReducer.selectedKeys) ||
+    {};
+
+  console.log("selectedKeys", selectedKeys);
+
+  const {
+    selectedAdInsights,
+    selectedCampaignInsights,
+    selectedAdSetInsights,
+    selectedAccountLevel,
+    selectedCreativeLevel,
+    selectedAdSetFields,
+    datePreset,
+    breakdowns,
+    timeIncrement,
+    selectedAdSetLevel,
+    configDays,
+    selectedDays,
+    account,
+    isView,
+    isEdit,
+  } =
+    useSelector((state: any) => state.storeFacebookInfoReducer.selectedKeys) ||
+    {};
 
   const { adAccounts } =
     useSelector((state: any) => state.adAccountReducer) || [];
@@ -72,34 +71,38 @@ export default function Attribute(props: any) {
   }, [selectedKeys?.account]);
 
   const fetchDropdownData = async () => {
-    const { data } = await axios.post(`${DOMAIN_URL.prod}/api/v1/get/all/fields`, {
-      insightNameList: [
-        "adInsights",
-        "campaignInsights",
-        "adSetInsights",
-        "accountLevel",
-        "creativeLevel",
-        "adSetLevel",
-        "adSetFields",
-        "datePreset",
-        "breakdowns",
-      ],
-    });
+    const { data } = await axios.post(
+      `${DOMAIN_URL.prod}/api/v1/get/all/fields`,
+      {
+        insightNameList: [
+          "adInsights",
+          "campaignInsights",
+          "adSetInsights",
+          "accountLevel",
+          "creativeLevel",
+          "adSetLevel",
+          "adSetFields",
+          "datePreset",
+          "breakdowns",
+        ],
+      }
+    );
     setFieldList(data?.data);
-
-    setSelectedKeys({
-      ...selectedKeys,
-      selectedAdInsights: data?.data["adInsights"],
-      selectedCampaignInsights: data?.data["campaignInsights"],
-      selectedAdSetInsights: data?.data["adSetInsights"],
-      selectedAccountLevel: data?.data["accountLevel"],
-      selectedCreativeLevel: data?.data["creativeLevel"],
-      selectedAdSetLevel: data?.data["adSetLevel"],
-      selectedAdSetFields: data?.data["adSetFields"],
-      selectedDatePreset: { label: "last_30d", value: "last_30d" },
-      // selectedBreakdowns: data?.data["breakdowns"],
-      selectedTimeIncrement: { label: "monthly", value: "monthly" },
-    });
+    await dispatch(
+      setSelectedKeysInfo({
+        ...selectedKeys,
+        selectedAdInsights: data?.data["adInsights"],
+        selectedCampaignInsights: data?.data["campaignInsights"],
+        selectedAdSetInsights: data?.data["adSetInsights"],
+        selectedAccountLevel: data?.data["accountLevel"],
+        selectedCreativeLevel: data?.data["creativeLevel"],
+        selectedAdSetLevel: data?.data["adSetLevel"],
+        selectedAdSetFields: data?.data["adSetFields"],
+        datePreset: { label: "last_30d", value: "last_30d" },
+        // breakdowns: data?.data["breakdowns"],
+        timeIncrement: { label: "monthly", value: "monthly" },
+      })
+    );
   };
 
   useEffect(() => {
@@ -121,31 +124,39 @@ export default function Attribute(props: any) {
 
   useEffect(() => {
     if (adCampaignAccounts?.length > 0) {
-      const data: any = [];
-      adCampaignAccounts.map((adCampaignAccount: any) => {
-        data.push({
-          label: `${adCampaignAccount?.name} (${adCampaignAccount?.id})`,
-          value: adCampaignAccount?.id,
-          id: adCampaignAccount?.id,
-        });
-      });
-      setSelectedKeys({
-        ...selectedKeys,
-        campaign: data,
-      });
-      setOptions({
-        ...options,
-        campaigns: data,
-      });
+      fetchAdCampaignsAccount();
     }
   }, [adCampaignAccounts]);
 
-  const onHandleAccountsChange = (selected: any) => {
-    setSelectedKeys({
-      ...selectedKeys,
-      account: selected,
-      userId: JSON?.parse(userData)?.userId,
+  const fetchAdCampaignsAccount = async () => {
+    const data: any = [];
+    adCampaignAccounts.map((adCampaignAccount: any) => {
+      data.push({
+        label: `${adCampaignAccount?.name} (${adCampaignAccount?.id})`,
+        value: adCampaignAccount?.id,
+        id: adCampaignAccount?.id,
+      });
     });
+    await dispatch(
+      setSelectedKeysInfo({
+        ...selectedKeys,
+        campaign: data,
+      })
+    );
+    setOptions({
+      ...options,
+      campaigns: data,
+    });
+  };
+
+  const onHandleAccountsChange = async (selected: any) => {
+    await dispatch(
+      setSelectedKeysInfo({
+        ...selectedKeys,
+        account: selected,
+        userId: JSON?.parse(userData)?.userId,
+      })
+    );
 
     const params = {
       userId: JSON?.parse(userData)?.userId,
@@ -169,12 +180,14 @@ export default function Attribute(props: any) {
     dispatch(adAccountAsync(params));
   };
 
-  const handleChange = (keyName: any) => (selected: any) => {
+  const handleChange = (keyName: any) => async (selected: any) => {
     if (keyName === "configName") {
-      setSelectedKeys({
-        ...selectedKeys,
-        [keyName]: selected?.target?.value,
-      });
+      await dispatch(
+        setSelectedKeysInfo({
+          ...selectedKeys,
+          [keyName]: selected?.target?.value,
+        })
+      );
     } else if (keyName === "selectedDays") {
       let newCron = "";
       if (selected.length === 7) {
@@ -184,21 +197,24 @@ export default function Attribute(props: any) {
         selected.map((item: any) => updated.push(item?.value));
         newCron = `0 0 * * ` + updated.toString();
       }
-      setSelectedKeys({
-        ...selectedKeys,
-        [keyName]: selected,
-        cron: newCron,
-      });
+      await dispatch(
+        setSelectedKeysInfo({
+          ...selectedKeys,
+          [keyName]: selected,
+          cron: newCron,
+        })
+      );
     } else {
-      setSelectedKeys({
-        ...selectedKeys,
-        [keyName]: selected,
-      });
+      await dispatch(
+        setSelectedKeysInfo({
+          ...selectedKeys,
+          [keyName]: selected,
+        })
+      );
     }
   };
 
   const handleSetDataAndMoveToNext = async () => {
-    await dispatch(setSelectedKeysInfo(selectedKeys));
     router.push("/create-data-stream/preview");
   };
 
@@ -223,6 +239,7 @@ export default function Attribute(props: any) {
         className="border-[1px] border-grey p-2"
         onChange={handleChange("configName")}
         value={selectedKeys?.configName}
+        disabled={isView ? isView : isEdit ? !isEdit : false}
       />
       {selectedKeys?.configName && (
         <>
@@ -231,10 +248,10 @@ export default function Attribute(props: any) {
               <label>Accounts*</label>
 
               <Select
-                // defaultValue={selectedOption}
                 onChange={onHandleAccountsChange}
                 options={options?.accounts}
                 value={selectedKeys?.account}
+                isDisabled={isView ? isView : isEdit ? !isEdit : false}
               />
             </>
           </div>
@@ -245,11 +262,11 @@ export default function Attribute(props: any) {
                   <label>Campaigns*</label>
 
                   <Select
-                    // defaultValue={selectedOption}
                     options={options?.campaigns}
                     onChange={handleChange("campaign")}
                     value={selectedKeys?.campaign}
                     isMulti
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -261,8 +278,9 @@ export default function Attribute(props: any) {
                   <Select
                     options={fieldList["adInsights"]}
                     onChange={handleChange("selectedAdInsights")}
-                    value={selectedKeys?.selectedAdInsights}
+                    value={selectedAdInsights}
                     isMulti
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -273,8 +291,9 @@ export default function Attribute(props: any) {
                   <Select
                     options={fieldList["campaignInsights"]}
                     isMulti
-                    value={selectedKeys?.selectedCampaignInsights}
+                    value={selectedCampaignInsights}
                     onChange={handleChange("selectedCampaignInsights")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -286,8 +305,9 @@ export default function Attribute(props: any) {
                   <Select
                     isMulti
                     options={fieldList["adSetInsights"]}
-                    value={selectedKeys?.selectedAdSetInsights}
+                    value={selectedAdSetInsights}
                     onChange={handleChange("selectedAdSetInsights")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -299,8 +319,9 @@ export default function Attribute(props: any) {
                   <Select
                     isMulti
                     options={fieldList["accountLevel"]}
-                    value={selectedKeys?.selectedAccountLevel}
+                    value={selectedAccountLevel}
                     onChange={handleChange("selectedAccountLevel")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -312,8 +333,9 @@ export default function Attribute(props: any) {
                   <Select
                     options={fieldList["creativeLevel"]}
                     isMulti
-                    value={selectedKeys?.selectedCreativeLevel}
+                    value={selectedCreativeLevel}
                     onChange={handleChange("selectedCreativeLevel")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -324,8 +346,9 @@ export default function Attribute(props: any) {
 
                   <Select
                     options={fieldList["adSetLevel"]}
-                    value={selectedKeys?.selectedAdSetLevel}
+                    value={selectedAdSetLevel}
                     onChange={handleChange("selectedAdSetLevel")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                     isMulti
                   />
                 </>
@@ -337,8 +360,9 @@ export default function Attribute(props: any) {
                   <Select
                     isMulti
                     options={fieldList["adSetFields"]}
-                    value={selectedKeys?.selectedAdSetFields}
+                    value={selectedAdSetFields}
                     onChange={handleChange("selectedAdSetFields")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -348,8 +372,9 @@ export default function Attribute(props: any) {
                   <label>Date Preset</label>
                   <Select
                     options={fieldList["datePreset"]}
-                    value={selectedKeys?.selectedDatePreset}
-                    onChange={handleChange("selectedDatePreset")}
+                    value={datePreset}
+                    onChange={handleChange("datePreset")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                     isClearable
                   />
                 </>
@@ -361,8 +386,9 @@ export default function Attribute(props: any) {
                   <Select
                     isMulti
                     options={fieldList["breakdowns"]}
-                    value={selectedKeys?.selectedBreakdowns}
-                    onChange={handleChange("selectedBreakdowns")}
+                    value={breakdowns}
+                    onChange={handleChange("breakdowns")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -375,8 +401,9 @@ export default function Attribute(props: any) {
                       { label: "monthly", value: "monthly" },
                       { label: "all_days", value: "all_days" },
                     ]}
-                    value={selectedKeys?.selectedTimeIncrement}
-                    onChange={handleChange("selectedTimeIncrement")}
+                    value={timeIncrement}
+                    onChange={handleChange("timeIncrement")}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
                 </>
               </div>
@@ -389,22 +416,24 @@ export default function Attribute(props: any) {
                     options={configCron}
                     defaultValue={configCron[1]}
                     onChange={handleChange("configDays")}
-                    value={selectedKeys?.configDays}
+                    isDisabled={isView ? isView : isEdit ? !isEdit : false}
+                    value={configDays}
                   />
                 </div>
-                {selectedKeys?.configDays?.label === "Days" && (
+                {configDays?.label === "Days" && (
                   <div className="col-span-10">
                     <label>Values</label>
                     <Select
                       isMulti
                       options={days}
-                      value={selectedKeys?.selectedDays}
+                      value={selectedDays}
                       onChange={handleChange("selectedDays")}
+                      isDisabled={isView ? isView : isEdit ? !isEdit : false}
                     />
                   </div>
                 )}
               </div>
-              {selectedKeys?.configDays?.label === "Days" ? (
+              {configDays?.label === "Days" ? (
                 <span>This config will be executed on every selected day</span>
               ) : (
                 <span>
