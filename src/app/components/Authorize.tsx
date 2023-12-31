@@ -5,6 +5,7 @@ import Select from "react-select";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 import FacebookIcon from "../assets/Facebook.jpg";
 import { facebookGetDetailsAsync } from "../redux/reducers/facebookGetCredentials";
@@ -69,17 +70,21 @@ export default function DataSource() {
     }
   }, [facebookUserList]);
 
+  // let facebookWindow: any;
   const handleSelectedOption = async () => {
     try {
       const response = await fetch(`http://localhost:3000/api/auth/signin`);
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
-      window.open(
-        `http://localhost:3000/api/auth/signin`,
-        "facebook-window",
-        "width=600,height=400,scrollbar=yes,noopener"
-      );
+      // facebookWindow = window.open(
+      //   `http://localhost:3000/api/auth/signin`,
+      //   "facebook-window",
+      //   "width=600,height=400,scrollbar=yes,noopener"
+      // );
 
-      // const jsonData = (await response.json()).data;
+      var newAnchor = document.createElement('a');
+      newAnchor.href = 'http://localhost:3000/api/auth/signin';
+      document.body.appendChild(newAnchor);
+      newAnchor.click();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -88,9 +93,8 @@ export default function DataSource() {
   const handleRadioButton = (event: any) => {
     if (event.target.value === "direct") {
       setSelectedRadioChecked(false);
-    } else{
+    } else {
       setSelectedRadioChecked(true);
-
     }
     setSelectedRadio(event.target.value);
   };
@@ -101,6 +105,7 @@ export default function DataSource() {
 
   console.log("session", session);
   useEffect(() => {
+
     if (session?.accessToken) {
       sendFacebookCred();
     }
@@ -108,6 +113,7 @@ export default function DataSource() {
 
   const sendFacebookCred = async () => {
     const userData: any = localStorage.getItem("auth");
+    debugger;
     const params = {
       name: session?.user?.name,
       email: JSON?.parse(userData)?.email,
@@ -118,6 +124,7 @@ export default function DataSource() {
     dispatch(facebookAsync(params)).then((res: any) => {
       // localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
       fetchFacebookList();
+      signOut();
     });
   };
 
@@ -145,9 +152,7 @@ export default function DataSource() {
         </button>
       </div>
 
-      <div
-        className="flex gap-4 items-center w-[700px]"
-      >
+      <div className="flex gap-4 items-center w-[700px]">
         <input
           type="radio"
           id={selectedRadio}

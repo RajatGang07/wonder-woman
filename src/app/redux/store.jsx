@@ -1,5 +1,10 @@
 "use client";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger'
+
 import authReducer from "./reducers/authSlice";
 import facebookCredentials from "./reducers/facebookCredentials";
 import adAccountReducer from './reducers/adAccounts';
@@ -10,6 +15,11 @@ import facebookGetUserListSlice from './reducers/facebookGetCredentials';
 import fetchfacebookConfigSlice from './reducers/fetchFacebookConfig';
 import executeSingleFacebookConfigSlice from './reducers/executeSingleFacebookConfig';
 import signUpSlice from './reducers/signUpSlice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -24,6 +34,14 @@ const rootReducer = combineReducers({
   signUpReducer: signUpSlice
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
 export const store = configureStore({
-  reducer: rootReducer,
-});
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+
+})
+
+export const persistor = persistStore(store)
+

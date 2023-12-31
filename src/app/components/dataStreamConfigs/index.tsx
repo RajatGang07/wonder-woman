@@ -8,9 +8,11 @@ import Lisitng from "./Listing";
 import { deleteFacebookConfigAsync } from "../../redux/reducers/deleteFacebookConfig";
 import { executeSingleFacebookConfigAsync } from "../../redux/reducers/executeSingleFacebookConfig";
 import { setSelectedKeysInfo } from "../../redux/reducers/storeFacebookInfo";
+import Modal from "../Modal";
 
 const DataStreamConfigsLisitng = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isModal, setIsModal] = useState({ open: false, id: -1 });
   const dispatch = useDispatch();
   const userData: any = localStorage.getItem("auth");
   const router = useRouter();
@@ -26,6 +28,9 @@ const DataStreamConfigsLisitng = () => {
 
   useEffect(() => {
     fetchAllConfigs();
+    return () => {
+      console.log("Component will unmount");
+    };
   }, []);
 
   const fetchAllConfigs = () => {
@@ -50,6 +55,23 @@ const DataStreamConfigsLisitng = () => {
   };
 
   const handleDelete = (id: any) => (event: any) => {
+    event.stopPropagation();
+    setIsModal({ open: true, id: id });
+    // dispatch(deleteFacebookConfigAsync({ id: id })).then(() => {
+    //   fetchAllConfigs();
+    // });
+  };
+
+  const handleConfirmDelete = (event: any) => {
+    event.stopPropagation();
+    dispatch(deleteFacebookConfigAsync({ id: isModal?.id })).then(() => {
+      fetchAllConfigs();
+      setSelectedIndex(-1);
+      setIsModal({ open: false, id: -1 });
+    });
+  };
+
+  const handleCancel = (id: any) => (event: any) => {
     event.stopPropagation();
     dispatch(deleteFacebookConfigAsync({ id: id })).then(() => {
       fetchAllConfigs();
@@ -91,6 +113,7 @@ const DataStreamConfigsLisitng = () => {
         handleEdit={handleEdit}
         handleView={handleView}
       />
+      {isModal.open && <Modal handleCancel={handleCancel} handleDelete={handleConfirmDelete} />}
     </section>
   );
 };

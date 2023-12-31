@@ -1,5 +1,6 @@
 "use client";
 import { useRouter, usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const TabsComponent = () => {
   const router = useRouter();
@@ -10,6 +11,10 @@ const TabsComponent = () => {
     router.push(route);
   };
 
+  const {selectedDataSource, isView, isEdit} = useSelector(
+    (state) =>
+      state?.storeFacebookInfoReducer?.selectedKeys
+  );
   return (
     <div>
       <h1 className="font-bold text-2xl mb-8">Create Data Stream</h1>
@@ -33,7 +38,7 @@ const TabsComponent = () => {
             </div>
             <div className="relative">
               <div
-                onClick={handleNavigate("/create-data-stream/authorize")}
+                // onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/authorize") : () => {}}
                 className="flex items-center pb-4  gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 "
               >
                 Authorize
@@ -48,7 +53,7 @@ const TabsComponent = () => {
             </div>
             <div className="relative">
               <div
-                onClick={handleNavigate("/create-data-stream/attributes")}
+                // onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/attributes") : () => {}}
                 className="flex items-center pb-4  gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 "
               >
                 Attributes

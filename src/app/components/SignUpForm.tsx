@@ -68,7 +68,7 @@ const SignUpForm = () => {
                   type="text"
                   {...register("companyName")}
                   id="companyName"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   placeholder="Beige Banana"
                   required={true}
                 />
@@ -81,7 +81,7 @@ const SignUpForm = () => {
                   type="text"
                   {...register("name")}
                   id="name"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   placeholder="Rajkumar Irani"
                   required={true}
                 />
@@ -94,7 +94,7 @@ const SignUpForm = () => {
                   type="text"
                   {...register("mobileNumber")}
                   id="mobileNumber"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   placeholder="9876543210"
                   required={true}
                 />
@@ -108,7 +108,7 @@ const SignUpForm = () => {
                   type="email"
                   {...register("email")}
                   id="email"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   placeholder="name@company.com"
                   required={true}
                 />
@@ -122,7 +122,7 @@ const SignUpForm = () => {
                   {...register("password")}
                   id="password"
                   placeholder="••••••••"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   required={true}
                 />
               </div>
@@ -134,7 +134,7 @@ const SignUpForm = () => {
                   type="confirmPassword"
                   {...register("confirmPassword")}
                   placeholder="••••••••"
-                  className=" border border-gray-300 sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
                   required={true}
                 />
               </div>
@@ -144,7 +144,7 @@ const SignUpForm = () => {
                     id="terms"
                     aria-describedby="terms"
                     type="checkbox"
-                    className="w-4 h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-primary-300  dark:dark:ring-offset-gray-800"
+                    className="w-4 h-4 border rounded  focus:ring-3 focus:ring-primary-300  dark:dark:ring-offset-gray-800"
                     required={true}
                   />
                 </div>
