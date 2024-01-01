@@ -52,7 +52,7 @@ const SignUpForm = () => {
             />
           </div>
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
               Create and account
             </h1>
             <form
@@ -61,60 +61,60 @@ const SignUpForm = () => {
               onSubmit={handleSubmit(signUp)}
             >
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                   Company Name
                 </label>
                 <input
                   type="text"
                   {...register("companyName")}
                   id="companyName"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   placeholder="Beige Banana"
                   required={true}
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                    Name
                 </label>
                 <input
                   type="text"
                   {...register("name")}
                   id="name"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   placeholder="Rajkumar Irani"
                   required={true}
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                    Mobile Number
                 </label>
                 <input
                   type="text"
                   {...register("mobileNumber")}
                   id="mobileNumber"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   placeholder="9876543210"
                   required={true}
                 />
               </div>
              
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                   Your email
                 </label>
                 <input
                   type="email"
                   {...register("email")}
                   id="email"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   placeholder="name@company.com"
                   required={true}
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                   Password
                 </label>
                 <input
@@ -122,19 +122,19 @@ const SignUpForm = () => {
                   {...register("password")}
                   id="password"
                   placeholder="••••••••"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   required={true}
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium dark:text-white">
+                <label className="block mb-2 text-sm font-medium ">
                   Confirm password
                 </label>
                 <input
                   type="confirmPassword"
                   {...register("confirmPassword")}
                   placeholder="••••••••"
-                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 dark:text-white"
+                  className=" border sm:text-sm rounded-lg  block w-full p-2.5 "
                   required={true}
                 />
               </div>
@@ -153,7 +153,7 @@ const SignUpForm = () => {
                     I accept the{" "}
                     <a
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
+                      href="https://beigebananas.com/privacy-policy-2/"
                     >
                       Terms and Conditions
                     </a>
