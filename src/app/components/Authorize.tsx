@@ -71,7 +71,7 @@ export default function DataSource() {
 
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch(`https://wakanda-forever.azurewebsites.net/api/auth/signin`);
+      const response = await fetch(`https://foresee.beigebananas.com/api/auth/signin`);
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
       // facebookWindow = window.open(
       //   `http://localhost:3000/api/auth/signin`,
@@ -80,7 +80,7 @@ export default function DataSource() {
       // );
 
       let newAnchor = document.createElement('a');
-      newAnchor.href = 'https://wakanda-forever.azurewebsites.net/api/auth/signin';
+      newAnchor.href = 'https://foresee.beigebananas.com/api/auth/signin';
       document.body.appendChild(newAnchor);
       newAnchor.click();
     } catch (error) {
