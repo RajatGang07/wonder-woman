@@ -70,10 +70,9 @@ export default function DataSource() {
     }
   }, [facebookUserList]);
 
-  // let facebookWindow: any;
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/signin`);
+      const response = await fetch(`https://wakanda-forever.azurewebsites.net/api/auth/signin`);
       // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
       // facebookWindow = window.open(
       //   `http://localhost:3000/api/auth/signin`,
@@ -81,8 +80,8 @@ export default function DataSource() {
       //   "width=600,height=400,scrollbar=yes,noopener"
       // );
 
-      var newAnchor = document.createElement('a');
-      newAnchor.href = 'http://localhost:3000/api/auth/signin';
+      let newAnchor = document.createElement('a');
+      newAnchor.href = 'https://wakanda-forever.azurewebsites.net/api/auth/signin';
       document.body.appendChild(newAnchor);
       newAnchor.click();
     } catch (error) {
