@@ -12,7 +12,7 @@ import YoutubeIcon from "../assets/Youtube.jpg";
 import adwords from "../assets/Adwords.jpg";
 import { setSelectedDataSource } from "../redux/reducers/storeFacebookInfo";
 
-export default function DataSource(props: any) {
+export default function Source(props: any) {
   const dispatch = useDispatch();
   const router = useRouter();
 
