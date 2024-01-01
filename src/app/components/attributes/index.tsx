@@ -34,8 +34,6 @@ export default function Attribute() {
     useSelector((state: any) => state.storeFacebookInfoReducer.selectedKeys) ||
     {};
 
-  console.log("selectedKeys", selectedKeys);
-
   const {
     selectedAdInsights,
     selectedCampaignInsights,
@@ -49,7 +47,6 @@ export default function Attribute() {
     selectedAdSetLevel,
     configDays,
     selectedDays,
-    account,
     isView,
     isEdit,
   } =
@@ -60,7 +57,6 @@ export default function Attribute() {
     useSelector((state: any) => state.adAccountReducer) || [];
   const { adCampaignAccounts } =
     useSelector((state: any) => state.adCampaignReducer) || [];
-  const userData: any = localStorage.getItem("auth");
 
   const { data: session } = useSession();
 
@@ -150,6 +146,8 @@ export default function Attribute() {
   };
 
   const onHandleAccountsChange = async (selected: any) => {
+    const userData: any = localStorage.getItem("auth");
+
     await dispatch(
       setSelectedKeysInfo({
         ...selectedKeys,
@@ -174,6 +172,7 @@ export default function Attribute() {
   }, [session?.accessToken, accessToken]);
 
   const fetchAccounts = async () => {
+    const userData: any = localStorage.getItem("auth");
     const params = {
       userId: JSON?.parse(userData)?.userId,
     };

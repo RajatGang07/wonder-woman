@@ -8,7 +8,6 @@ import { facebookDisconnectDetailsAsync } from "../../redux/reducers/facebookDis
 
 const ConenctionListing = () => {
   const dispatch = useDispatch();
-  const userData: any = localStorage.getItem("auth");
 
   const facebookUserList =
     useSelector(
@@ -16,21 +15,18 @@ const ConenctionListing = () => {
     ) || [];
 
   useEffect(() => {
-    if (JSON?.parse(userData)?.userId) {
-      facebookGetDetails();
-    }
-  }, [JSON?.parse(userData)?.userId]);
+    facebookGetDetails();
+  }, []);
 
   const facebookGetDetails = () => {
+    const userData: any = localStorage.getItem("auth");
     dispatch(
       facebookGetDetailsAsync({ userId: JSON?.parse(userData)?.userId })
     );
   };
 
   const handleDisconnect = (id: any) => () => {
-    dispatch(
-      facebookDisconnectDetailsAsync({ id: id })
-    ).then(() => {
+    dispatch(facebookDisconnectDetailsAsync({ id: id })).then(() => {
       facebookGetDetails();
     });
   };

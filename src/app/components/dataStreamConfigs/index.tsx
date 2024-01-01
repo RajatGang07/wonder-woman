@@ -14,7 +14,6 @@ const DataStreamConfigsLisitng = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isModal, setIsModal] = useState({ open: false, id: -1 });
   const dispatch = useDispatch();
-  const userData: any = localStorage.getItem("auth");
   const router = useRouter();
 
   const configData =
@@ -34,6 +33,7 @@ const DataStreamConfigsLisitng = () => {
   }, []);
 
   const fetchAllConfigs = () => {
+    const userData: any = localStorage.getItem("auth");
     dispatch(
       fetchFacebookConfigAsync({ userId: JSON?.parse(userData)?.userId })
     );

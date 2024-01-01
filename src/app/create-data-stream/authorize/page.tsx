@@ -1,7 +1,7 @@
-import DataSource from '../../components/Authorize';
+import Authorize from '../../components/Authorize';
 
-export default function Authorize() {
+export default function AuthorizePage() {
   return (
-      <DataSource />
+      <Authorize />
   );
 }

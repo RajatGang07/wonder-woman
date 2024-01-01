@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Select from "react-select";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 
 import FacebookIcon from "../assets/Facebook.jpg";
 import { facebookGetDetailsAsync } from "../redux/reducers/facebookGetCredentials";
@@ -22,7 +21,6 @@ export default function DataSource() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const userData: any = localStorage.getItem("auth");
 
   const { selectedDataSource, isView, isEdit } = useSelector(
     (state: any) => state?.storeFacebookInfoReducer?.selectedKeys
@@ -45,6 +43,7 @@ export default function DataSource() {
   );
 
   const fetchFacebookList = async () => {
+    const userData: any = localStorage.getItem("auth");
     dispatch(
       facebookGetDetailsAsync({
         userId: JSON?.parse(userData)?.userId,
