@@ -1,5 +1,5 @@
-// slices/saveFacebookSlice.js
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { DOMAIN_URL } from "../../services";
@@ -47,11 +47,31 @@ const executeSingleFacebookConfigSlice = createSlice({
       })
       .addCase(executeSingleFacebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        state.loading = false
+        state.loading = false;
+        toast.success(action.payload.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .addCase(executeSingleFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.loading = false
+        toast.error(action.payload.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       });
   },
 });

@@ -1,5 +1,6 @@
 // slices/facebookCred.js
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { DOMAIN_URL } from "../../services";
@@ -50,10 +51,30 @@ const facebookCredSlice = createSlice({
       })
       .addCase(facebookAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
+        toast.success(action.payload.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .addCase(facebookAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.error = action.payload;
+        toast.error(action.payload.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       });
   },
 });

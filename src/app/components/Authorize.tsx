@@ -113,7 +113,6 @@ export default function DataSource() {
 
   const sendFacebookCred = async () => {
     const userData: any = localStorage.getItem("auth");
-    debugger;
     const params = {
       name: session?.user?.name,
       email: JSON?.parse(userData)?.email,

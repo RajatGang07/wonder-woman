@@ -1,5 +1,6 @@
 // slices/saveFacebookSlice.js
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { DOMAIN_URL } from "../../services";
@@ -52,12 +53,29 @@ const deletefaebookConfigSlice = createSlice({
       })
       .addCase(deleteFacebookConfigAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
-        // state.isAuthenticated = true;
-        // state.user = action.payload.data;
+        toast.success(action.payload.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .addCase(deleteFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
-        // state.error = action.payload;
+        toast.error(action.payload.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       });
   },
 });

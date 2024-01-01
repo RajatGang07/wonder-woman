@@ -32,7 +32,6 @@ const SignUpForm = () => {
       readTermsAndConditions: true
     };
     dispatch(signupAsync(data)).then((res: any) => {
-      debugger
       if (res?.payload?.data?.status) {
         router.push("/login");
       }

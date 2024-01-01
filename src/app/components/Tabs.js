@@ -11,7 +11,7 @@ const TabsComponent = () => {
     router.push(route);
   };
 
-  const {selectedDataSource, isView, isEdit} = useSelector(
+  const {selectedDataSource} = useSelector(
     (state) =>
       state?.storeFacebookInfoReducer?.selectedKeys
   );
@@ -38,7 +38,7 @@ const TabsComponent = () => {
             </div>
             <div className="relative">
               <div
-                // onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/authorize") : () => {}}
+                onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/authorize") : () => {}}
                 className="flex items-center pb-4  gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 "
               >
                 Authorize
@@ -53,7 +53,7 @@ const TabsComponent = () => {
             </div>
             <div className="relative">
               <div
-                // onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/attributes") : () => {}}
+                onClick={selectedDataSource !== '' ?handleNavigate("/create-data-stream/attributes") : () => {}}
                 className="flex items-center pb-4  gap-x-1 justify-center text-sm font-semibold leading-6  cursor-pointer text-black hover:text-secondary hover:border-gray-300 "
               >
                 Attributes
@@ -68,14 +68,14 @@ const TabsComponent = () => {
             </div>
             <div className="relative">
               <div
-                // onClick={handleNavigate("/create-data-stream/schedule")}
+                onClick={handleNavigate("/create-data-stream/schedule")}
                 className="flex items-center pb-4  gap-x-1  justify-center text-sm font-semibold leading-6  text-black hover:text-secondary hover:border-gray-300 "
               >
                 Preview
               </div>
               <div
                 className={`${
-                  pathname === "/create-data-stream/showPreview"
+                  pathname === "/create-data-stream/preview"
                     ? "w-[185px] border-2 border-secondary  underline"
                     : ""
                 }`}

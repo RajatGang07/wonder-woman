@@ -73,7 +73,6 @@ const faebookConfigSlice = createSlice({
       })
       .addCase(facebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
-        debugger
         toast.error(action.payload.response.data.message, {
           position: "top-right",
           autoClose: 5000,
