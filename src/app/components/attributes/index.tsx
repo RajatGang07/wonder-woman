@@ -243,7 +243,6 @@ export default function Attribute() {
       {selectedKeys?.configName && (
         <>
           <div className="grid grid-cols gap-4">
-            <>
               <label>Accounts*</label>
 
               <Select
@@ -252,7 +251,6 @@ export default function Attribute() {
                 value={selectedKeys?.account}
                 isDisabled={isView ? isView : isEdit ? !isEdit : false}
               />
-            </>
           </div>
           {selectedKeys.account && (
             <>
@@ -271,7 +269,6 @@ export default function Attribute() {
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Ad Insights</label>
 
                   <Select
@@ -281,10 +278,8 @@ export default function Attribute() {
                     isMulti
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Campaign Insights</label>
 
                   <Select
@@ -294,13 +289,10 @@ export default function Attribute() {
                     onChange={handleChange("selectedCampaignInsights")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Ad Set Insights</label>
-
                   <Select
                     isMulti
                     options={fieldList["adSetInsights"]}
@@ -308,11 +300,9 @@ export default function Attribute() {
                     onChange={handleChange("selectedAdSetInsights")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Account Level</label>
 
                   <Select
@@ -322,11 +312,9 @@ export default function Attribute() {
                     onChange={handleChange("selectedAccountLevel")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Creative Level</label>
 
                   <Select
@@ -336,11 +324,9 @@ export default function Attribute() {
                     onChange={handleChange("selectedCreativeLevel")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Ad Set Level</label>
 
                   <Select
@@ -350,11 +336,9 @@ export default function Attribute() {
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                     isMulti
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>AdSet Fields</label>
                   <Select
                     isMulti
@@ -363,11 +347,9 @@ export default function Attribute() {
                     onChange={handleChange("selectedAdSetFields")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Date Preset</label>
                   <Select
                     options={fieldList["datePreset"]}
@@ -376,11 +358,9 @@ export default function Attribute() {
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                     isClearable
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Breakdown</label>
                   <Select
                     isMulti
@@ -389,11 +369,9 @@ export default function Attribute() {
                     onChange={handleChange("breakdowns")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Time Increment</label>
                   <CreatableSelect
                     options={[
@@ -404,7 +382,6 @@ export default function Attribute() {
                     onChange={handleChange("timeIncrement")}
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols-12 gap-4">

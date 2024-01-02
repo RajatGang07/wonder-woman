@@ -24,8 +24,6 @@ export default function DataStreamPage(props: any) {
     handleFetchLogs();
   }, []);
 
-  console.log(process, 'process')
-
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
       <Table data={csvTable} />

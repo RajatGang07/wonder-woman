@@ -28,7 +28,6 @@ export default function ShowPreview() {
         selectedKeys
       );
       setCSVTable(creativeLevelResponse?.data?.response);
-      console.log("creativeLevelResponse", creativeLevelResponse);
   
     } catch (err: any) {
       console.log(err)

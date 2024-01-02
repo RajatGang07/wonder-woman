@@ -35,7 +35,6 @@ const Lisitng = ({ data, handleDisconnect }: any) => {
               row?.accountList.map((item: any) =>
                 selectedDay.push(`${item.name}_${item?.id}`)
               );
-              console.log("selectedDay", selectedDay);
               return (
                 <tr
                   className="border-b-[1px] text-lightBlack border-b-lightGray hover:bg-slate-50 "

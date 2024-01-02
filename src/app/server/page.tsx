@@ -6,7 +6,6 @@ import { DOMAIN_URL } from "../services"
 export default async function ServerPage() {
     const session = await getServerSession(options)
 
-    console.log('getServerSession', session)
     if (!session) {
         redirect(`${DOMAIN_URL.prod}/api/auth/signin?callbackUrl=/server`)
     }
