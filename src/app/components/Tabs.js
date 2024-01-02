@@ -15,6 +15,8 @@ const TabsComponent = () => {
     (state) =>
       state?.storeFacebookInfoReducer?.selectedKeys
   );
+  console.log('FACEBOOK_ID:', process);
+
   return (
     <div>
       <h1 className="font-bold text-2xl mb-8">Create Data Stream</h1>
