@@ -4,12 +4,13 @@ import FacebookProvider from "next-auth/providers/facebook";
 export const options: NextAuthOptions = {
   providers: [
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_SECRET,
+      idToken: true,
+      clientId: "1361038827821051" as string,
+      clientSecret: "cad14b5e85a97174de6eedb7d1912589" as string,
       authorization: {
         url: "https://www.facebook.com/v11.0/dialog/oauth",
         params: {
-          client_id: process.env.FACEBOOK_CLIENT_ID,
+          client_id: "1361038827821051",
           scope: "openid email",
           response_type: "code",
         },
