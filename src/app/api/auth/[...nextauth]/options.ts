@@ -44,8 +44,8 @@ export const options: NextAuthOptions = {
       session.accessToken = token.accessToken;
       return session;
     },
-    async redirect({ url, baseUrl }: any) {
-      return baseUrl
-    },
+    // async redirect({ url, baseUrl }: any) {
+    //   return baseUrl
+    // },
   },
 };
