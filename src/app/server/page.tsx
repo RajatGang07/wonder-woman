@@ -7,7 +7,7 @@ export default async function ServerPage() {
     const session = await getServerSession(options)
 
     if (!session) {
-        redirect(`${DOMAIN_URL.prod}/api/auth/signin?callbackUrl=/server`)
+        redirect(`${DOMAIN_URL.prod}/api/auth/signin/facebook`)
     }
 
     return (
