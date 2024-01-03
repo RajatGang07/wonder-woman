@@ -18,7 +18,7 @@ export const options: NextAuthOptions = {
       token: {
         url: "https://graph.facebook.com/oauth/access_token",
         async request(context) {
-          // console.log("context >>", context);
+          console.log("context >>", context);
           const url =
             `https://graph.facebook.com/oauth/access_token` +
             `?code=${context.params.code}` +
