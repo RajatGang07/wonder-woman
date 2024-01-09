@@ -121,7 +121,7 @@ export default function DataSource() {
     dispatch(facebookAsync(params)).then((res: any) => {
       // localStorage.setItem("auth", JSON.stringify(res?.payload?.data));
       fetchFacebookList();
-      signOut();
+      // signOut();
     });
   };
 
