@@ -49,5 +49,3 @@ export const options: NextAuthOptions = {
     // },
   },
 };
-
-https://www.facebook.com/login/reauth.php?app_id=1361038827821051&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fv11.0%2Fdialog%2Foauth%3Fclient_id%3D1361038827821051%26scope%3Dopenid%252Cemail%252Cread_insights%252Cads_management%252Cads_read%252Cbusiness_management%252Cpublic_profile%26response_type%3Dcode%26redirect_uri%3Dhttps%253A%252F%252Fforesee.beigebananas.com%252Fapi%252Fauth%252Fcallback%252Ffacebook%26state%3DKj4H3J95j4LxhH9kqd8-5K44jWDpm3KY7SRXzcarRUc%26ret%3Dlogin%26fbapp_pres%3D0%26logger_id%3Df35b433d-9b2a-4ee3-b2f2-f598ffc81fe7%26tp%3Dunspecified&cancel_url=https%3A%2F%2Fforesee.beigebananas.com%2Fapi%2Fauth%2Fcallback%2Ffacebook%3Ferror%3Daccess_denied%26error_code%3D200%26error_description%3DPermissions%2Berror%26error_reason%3Duser_denied%26state%3DKj4H3J95j4LxhH9kqd8-5K44jWDpm3KY7SRXzcarRUc%23_%3D_&display=page&locale=en_GB&pl_dbl=0
