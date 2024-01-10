@@ -11,10 +11,9 @@ export const options: NextAuthOptions = {
         url: 'https://www.facebook.com/v11.0/dialog/oauth',
         params: {
           client_id: '1361038827821051',
-          redirect_uri: 'https://foresee.beigebananas.com/api/auth/callback/facebook',
           response_type: 'code',
           scope: 'email,ads_read,public_profile,read_insights,pages_read_engagement,business_management',
-          state: 'cad14b5e85a97174de6eedb7d1912589'
+          state: '631aa81eee2a93836053fb6e47809f292c2e6f0e456a5fa8ef2c6fd1206a1ffa'
         },
       },
       token: {
