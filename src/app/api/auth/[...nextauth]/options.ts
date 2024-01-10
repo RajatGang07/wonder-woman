@@ -11,7 +11,7 @@ export const options: NextAuthOptions = {
         url: "https://www.facebook.com/v11.0/dialog/oauth",
         params: {
           client_id: "1361038827821051",
-          scope: "openid email",
+          scope: "openid email read_insights ads_management ads_read business_management public_profile",
           response_type: "code",
         },
       },
