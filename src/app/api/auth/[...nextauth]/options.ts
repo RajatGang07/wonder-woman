@@ -1,35 +1,37 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from 'next-auth';
 import FacebookProvider from "next-auth/providers/facebook";
 
 export const options: NextAuthOptions = {
   providers: [
     FacebookProvider({
       idToken: true,
-      clientId: "1361038827821051" as string,
-      clientSecret: "cad14b5e85a97174de6eedb7d1912589" as string,
+      clientId: '1361038827821051' as string,
+      clientSecret: 'cad14b5e85a97174de6eedb7d1912589' as string,
       authorization: {
-        url: "https://www.facebook.com/v11.0/dialog/oauth",
+        url: 'https://www.facebook.com/v11.0/dialog/oauth',
         params: {
-          client_id: "1361038827821051",
-          scope: "openid,email,read_insights,ads_management,ads_read,business_management,public_profile",
-          response_type: "code",
+          client_id: '1361038827821051',
+          redirect_uri: 'https://foresee.beigebananas.com/api/auth/callback/facebook',
+          response_type: 'code',
+          scope: 'email,ads_read,public_profile,read_insights,pages_read_engagement,business_management',
+          state: 'cad14b5e85a97174de6eedb7d1912589'
         },
       },
-      // token: {
-      //   url: "https://graph.facebook.com/oauth/access_token",
-      //   async request(context) {
-      //     console.log("context >>", context);
-      //     const url =
-      //       `https://graph.facebook.com/oauth/access_token` +
-      //       `?code=${context.params.code}` +
-      //       `&client_id=${context.provider.clientId}` +
-      //       `&redirect_uri=${context.provider.callbackUrl}` +
-      //       `&client_secret=${context.provider.clientSecret}`;
-      //     const response = await fetch(url);
-      //     const tokens = await response.json();
-      //     return { tokens };
-      //   },
-      // },
+      token: {
+        url: 'https://graph.facebook.com/oauth/access_token',
+        async request(context) {
+          console.log('context >>', context);
+          const url =
+            `https://graph.facebook.com/oauth/access_token` +
+            `?code=${context.params.code}` +
+            `&client_id=${context.provider.clientId}` +
+            `&redirect_uri=${context.provider.callbackUrl}` +
+            `&client_secret=${context.provider.clientSecret}`;
+          const response = await fetch(url);
+          const tokens = await response.json();
+          return { tokens };
+        },
+      },
     }),
   ],
 
