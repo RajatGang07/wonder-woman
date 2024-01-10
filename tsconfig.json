@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Tabs.js", "src/app/components/ReactTable.jsx", "src/app/redux/store.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/Tabs.js", "src/app/components/ReactTable.jsx", "src/app/redux/store.jsx", "src/app/api/auth/[...nextauth]/options.js"],
   "exclude": ["node_modules"]
 }
