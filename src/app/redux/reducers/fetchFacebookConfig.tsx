@@ -63,7 +63,7 @@ const fetchfacebookConfigSlice = createSlice({
       .addCase(fetchFacebookConfigAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.configData = [];
-        toast.error(action.payload.response.data.message, {
+        toast.error(action?.payload?.response?.data?.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

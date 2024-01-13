@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 import { fetchFacebookConfigAsync } from "../../redux/reducers/fetchFacebookConfig";
 import Lisitng from "./Listing";
@@ -48,8 +49,19 @@ const DataStreamConfigsLisitng = () => {
     setSelectedIndex(rowIndex);
     dispatch(executeSingleFacebookConfigAsync({ id: id })).then((res: any) => {
       console.log(res, "res");
-      if (res.payload.data.status) {
+      if (res?.payload?.data?.status) {
         handleNavigate("/dataStream");
+      } else {
+        toast.error(res?.payload, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
     });
   };

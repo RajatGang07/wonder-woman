@@ -53,7 +53,7 @@ const adCampaignAccountSlice = createSlice({
       .addCase(adCampaignAccountAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        state.adCampaignAccounts = action.payload.data.data.data;
+        state.adCampaignAccounts = action?.payload?.data?.data?.data;
       })
       .addCase(adCampaignAccountAsync.rejected, (state: any, action: any) => {
         state.status = "failed";

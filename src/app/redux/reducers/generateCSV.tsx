@@ -69,7 +69,7 @@ const generateCSVSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
         state.csvList = [];
-        toast.error(action.payload.response.data.message, {
+        toast.error(action?.payload?.response?.data?.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

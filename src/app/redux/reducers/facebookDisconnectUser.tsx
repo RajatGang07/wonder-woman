@@ -67,7 +67,7 @@ const facebookDeleteSlice = createSlice({
       .addCase(facebookDisconnectDetailsAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
         state.error = action.payload;
-        toast.error(action.payload.response.data.message, {
+        toast.error(action?.payload?.response?.data?.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

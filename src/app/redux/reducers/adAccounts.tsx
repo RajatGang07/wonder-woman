@@ -53,7 +53,7 @@ const adAccountSlice = createSlice({
       .addCase(adAccountAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        state.adAccounts = action.payload.data.data.data;
+        state.adAccounts = action?.payload?.data?.data?.data;
       })
       .addCase(adAccountAsync.rejected, (state: any, action: any) => {
         state.status = "failed";
@@ -63,8 +63,8 @@ const adAccountSlice = createSlice({
 });
 
 export const { logout } = adAccountSlice.actions;
-export const selectadAccounts = (state: any) => state.adAccount.adAccounts;
-export const selectIsAuthenticated = (state: any) => state.adAccount.isAuthenticated;
+export const selectadAccounts = (state: any) => state?.adAccount?.adAccounts;
+export const selectIsAuthenticated = (state: any) => state?.adAccount?.isAuthenticated;
 
 
 export default adAccountSlice.reducer;
