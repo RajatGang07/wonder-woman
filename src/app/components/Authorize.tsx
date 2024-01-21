@@ -73,16 +73,16 @@ export default function DataSource() {
 
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/signin`);
-      // window.open("http://localhost:3000/api/auth/signin", '', 'width=600,height=400');
+      const response = await fetch(`https://foresee.beigebananas.com/api/auth/signin`);
+      // window.open("https://foresee.beigebananas.com/api/auth/signin", '', 'width=600,height=400');
       // facebookWindow = window.open(
-      //   `http://localhost:3000/api/auth/signin`,
+      //   `https://foresee.beigebananas.com/api/auth/signin`,
       //   "facebook-window",
       //   "width=600,height=400,scrollbar=yes,noopener"
       // );
 
       let newAnchor = document.createElement('a');
-      newAnchor.href = 'http://localhost:3000/api/auth/signin';
+      newAnchor.href = 'https://foresee.beigebananas.com/api/auth/signin';
       document.body.appendChild(newAnchor);
       newAnchor.click();
     } catch (error) {
