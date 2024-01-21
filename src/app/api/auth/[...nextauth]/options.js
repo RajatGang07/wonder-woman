@@ -37,13 +37,19 @@ export const options = {
 
   callbacks: {
     async jwt({ token, account, profile }) {
+      console.log('account', account)
+
       if (account) {
         token.accessToken = account.access_token;
+        token.id = user?.id
+
       }
       return token;
     },
     async session({ session, token, user }) {
+      console.log('user', user)
       session.accessToken = token.accessToken;
+      session.user.email = token.id;
       return session;
     },
     // async redirect({ url, baseUrl }: any) {
