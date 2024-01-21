@@ -7,14 +7,12 @@ export const options = {
       idToken: true,
       clientId: '1361038827821051',
       clientSecret: 'cad14b5e85a97174de6eedb7d1912589',
-      scope: 'email,ads_read,public_profile,read_insights,pages_read_engagement,business_management',
       authorization: {
         url: 'https://www.facebook.com/v11.0/dialog/oauth',
         params: {
           client_id: '1361038827821051',
           response_type: 'code',
           scope: 'email,ads_read,public_profile,read_insights,pages_read_engagement,business_management',
-          state: '631aa81eee2a93836053fb6e47809f292c2e6f0e456a5fa8ef2c6fd1206a1ffa'
         },
       },
       token: {
@@ -41,7 +39,7 @@ export const options = {
 
       if (account) {
         token.accessToken = account.access_token;
-        token.id = user?.id
+        // token.id = user?.id
 
       }
       return token;
@@ -49,7 +47,7 @@ export const options = {
     async session({ session, token, user }) {
       console.log('user', user)
       session.accessToken = token.accessToken;
-      session.user.email = token.id;
+      // session.user.email = token.id;
       return session;
     },
     // async redirect({ url, baseUrl }: any) {
