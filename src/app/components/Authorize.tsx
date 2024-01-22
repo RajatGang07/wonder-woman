@@ -19,6 +19,7 @@ export default function DataSource() {
   const session1 = useSession();
   const { data: session } = useSession();
 
+  console.log('session1', session1)
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -102,6 +103,7 @@ export default function DataSource() {
     router.push("/create-data-stream/attributes");
   };
 
+  console.log("session", session);
   useEffect(() => {
 
     if (session?.accessToken) {

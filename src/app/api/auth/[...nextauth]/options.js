@@ -7,6 +7,16 @@ export const options = {
       idToken: true,
       clientId: '1361038827821051',
       clientSecret: 'cad14b5e85a97174de6eedb7d1912589',
+      userinfo: {
+        url: 'https://graph.facebook.com/me',
+        params: { fields: 'id,name,email,picture,first_name,last_name' },
+        async request({ tokens, client, provider }) {
+          const res = await client.userinfo(tokens.access_token, {
+            params: provider.userinfo?.params
+          });
+          return res;
+        }
+      },
       authorization: {
         url: 'https://www.facebook.com/v18.0/dialog/oauth',
         params: {

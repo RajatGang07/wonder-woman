@@ -9,7 +9,7 @@ const Dashboard = (props: any) => {
     authData = localStorage.getItem("auth");
   }
 
-  console.log("I am fis", localStorage);
+  console.log("I am fis");
   return (
     <>
       {typeof window !== "undefined" && JSON?.parse(authData)?.token
