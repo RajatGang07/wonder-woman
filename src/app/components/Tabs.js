@@ -15,13 +15,11 @@ const TabsComponent = () => {
     (state) =>
       state?.storeFacebookInfoReducer?.selectedKeys
   );
-  console.log('FACEBOOK_ID:', process);
+  
 // components/ExampleComponent.js
 const apiKey = process.env.NEXT_PUBLIC_NEXTAUTH_URL;
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-console.log('API Key:', apiKey);
-console.log('API URL:', apiUrl);
 
 // Use the variables in your component...
 

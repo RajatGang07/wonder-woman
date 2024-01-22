@@ -8,7 +8,7 @@ export const options = {
       clientId: '1361038827821051',
       clientSecret: 'cad14b5e85a97174de6eedb7d1912589',
       authorization: {
-        url: 'https://www.facebook.com/v11.0/dialog/oauth',
+        url: 'https://www.facebook.com/v18.0/dialog/oauth',
         params: {
           client_id: '1361038827821051',
           response_type: 'code',
@@ -35,8 +35,6 @@ export const options = {
 
   callbacks: {
     async jwt({ token, account, profile }) {
-      console.log('account', account)
-
       if (account) {
         token.accessToken = account.access_token;
         // token.id = user?.id
@@ -45,7 +43,6 @@ export const options = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log('user', user)
       session.accessToken = token.accessToken;
       // session.user.email = token.id;
       return session;

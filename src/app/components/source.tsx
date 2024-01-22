@@ -17,8 +17,6 @@ export default function Source(props: any) {
   const router = useRouter();
 
   const state = useSelector((state: any) => state);
-
-  console.log("state", state);
   const {selectedDataSource, isView, isEdit} = useSelector(
     (state: any) =>
       state?.storeFacebookInfoReducer?.selectedKeys

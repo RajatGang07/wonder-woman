@@ -48,7 +48,6 @@ const DataStreamConfigsLisitng = () => {
     event.stopPropagation();
     setSelectedIndex(rowIndex);
     dispatch(executeSingleFacebookConfigAsync({ id: id })).then((res: any) => {
-      console.log(res, "res");
       if (res?.payload?.data?.status) {
         handleNavigate("/dataStream");
       } else {

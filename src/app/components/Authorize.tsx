@@ -19,7 +19,6 @@ export default function DataSource() {
   const session1 = useSession();
   const { data: session } = useSession();
 
-  console.log('session1', session1)
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -73,7 +72,7 @@ export default function DataSource() {
 
   const handleSelectedOption = async () => {
     try {
-      const response = await fetch(`https://foresee.beigebananas.com/api/auth/signin`);
+      const response = await fetch(`http://localhost:3000/api/auth/signin`);
       // window.open("https://foresee.beigebananas.com/api/auth/signin", '', 'width=600,height=400');
       // facebookWindow = window.open(
       //   `https://foresee.beigebananas.com/api/auth/signin`,
@@ -82,7 +81,7 @@ export default function DataSource() {
       // );
 
       let newAnchor = document.createElement('a');
-      newAnchor.href = 'https://foresee.beigebananas.com/api/auth/signin';
+      newAnchor.href = 'http://localhost:3000/api/auth/signin';
       document.body.appendChild(newAnchor);
       newAnchor.click();
     } catch (error) {
@@ -103,7 +102,6 @@ export default function DataSource() {
     router.push("/create-data-stream/attributes");
   };
 
-  console.log("session", session);
   useEffect(() => {
 
     if (session?.accessToken) {
