@@ -33,7 +33,7 @@ export const options = {
             `https://graph.facebook.com/oauth/access_token` +
             `?code=${context.params.code}` +
             `&client_id=${context.provider.clientId}` +
-            `&redirect_uri=${context.provider.callbackUrl}` +
+            `&redirect_uri=https://foresee.beigebananas.com/create-data-stream/authorize` +
             `&client_secret=${context.provider.clientSecret}`;
           const response = await fetch(url);
           const tokens = await response.json();
