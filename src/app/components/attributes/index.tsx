@@ -24,7 +24,7 @@ export default function Attribute() {
     fields: FIELDS,
   });
 
-  const { accessToken } =
+  const { accessToken, fbEmail } =
     useSelector(
       (state: any) =>
         state.storeFacebookInfoReducer.selectedKeys.selectedFacebookUser
@@ -166,15 +166,16 @@ export default function Attribute() {
   };
 
   useEffect(() => {
-    if (session?.accessToken || accessToken) {
+    if (session?.accessToken || accessToken || fbEmail) {
       fetchAccounts();
     }
-  }, [session?.accessToken, accessToken]);
+  }, [session?.accessToken, accessToken, fbEmail]);
 
   const fetchAccounts = async () => {
     const userData: any = localStorage.getItem("auth");
     const params = {
       userId: JSON?.parse(userData)?.userId,
+      fbEmail: fbEmail,
     };
     dispatch(adAccountAsync(params));
   };
