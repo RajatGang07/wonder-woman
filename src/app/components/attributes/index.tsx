@@ -160,6 +160,7 @@ export default function Attribute() {
       userId: JSON?.parse(userData)?.userId,
       actId: selected?.value,
       field: "name",
+      fbEmail: fbEmail
     };
 
     dispatch(adCampaignAccountAsync(params));
@@ -258,7 +259,6 @@ export default function Attribute() {
               <div className="grid grid-cols gap-4">
                 <>
                   <label>Campaigns*</label>
-
                   <Select
                     options={options?.campaigns}
                     onChange={handleChange("campaign")}

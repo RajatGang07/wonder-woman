@@ -1,18 +1,20 @@
 "use client";
 import React from "react";
+import { useSelector } from "react-redux";
 
 import { redirect } from "next/navigation";
 
 const Dashboard = (props: any) => {
-  let authData: any = "";
-  if (typeof window !== "undefined") {
-    authData = localStorage.getItem("auth");
-  }
+
+  const userId =
+  useSelector(
+    (state: any) => state?.auth?.user?.userId
+  ) || [];
 
   console.log("I am fis");
   return (
     <>
-      {typeof window !== "undefined" && JSON?.parse(authData)?.token
+      {userId
         ? redirect("/dataStreamConfigs")
         : redirect("/login")}
     </>
