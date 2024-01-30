@@ -252,12 +252,12 @@ export default function Attribute() {
                 options={options?.accounts}
                 value={selectedKeys?.account}
                 isDisabled={isView ? isView : isEdit ? !isEdit : false}
+                isMulti
               />
           </div>
           {selectedKeys.account && (
             <>
               <div className="grid grid-cols gap-4">
-                <>
                   <label>Campaigns*</label>
                   <Select
                     options={options?.campaigns}
@@ -266,7 +266,6 @@ export default function Attribute() {
                     isMulti
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
-                </>
               </div>
 
               <div className="grid grid-cols gap-4">
@@ -411,7 +410,7 @@ export default function Attribute() {
                 )}
               </div>
               {configDays?.label === "Days" ? (
-                <span>This config will be executed on every selected day</span>
+                <span className="text-[red]">This config will be executed on every selected day</span>
               ) : (
                 <span>
                   This config will be executed on last day of the month

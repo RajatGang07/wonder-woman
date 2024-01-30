@@ -28,9 +28,6 @@ const DataStreamConfigsLisitng = () => {
 
   useEffect(() => {
     fetchAllConfigs();
-    return () => {
-      console.log("Component will unmount");
-    };
   }, []);
 
   const fetchAllConfigs = () => {
@@ -114,7 +111,7 @@ const DataStreamConfigsLisitng = () => {
   };
 
   return (
-    <section className="pb-8 gap-12">
+    <div className="pb-8 gap-12">
       <Lisitng
         data={configData}
         handleDelete={handleDelete}
@@ -125,7 +122,7 @@ const DataStreamConfigsLisitng = () => {
         handleView={handleView}
       />
       {isModal.open && <Modal handleCancel={handleCancel} handleDelete={handleConfirmDelete} />}
-    </section>
+    </div>
   );
 };
 

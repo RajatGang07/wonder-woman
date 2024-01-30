@@ -20,7 +20,7 @@ const Modal = ({handleDelete, handleCancel}: any) => {
                     className="h-6 w-6 text-red-600"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     aria-hidden="true"
                   >
