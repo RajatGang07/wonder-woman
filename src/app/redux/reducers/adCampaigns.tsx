@@ -53,7 +53,22 @@ const adCampaignAccountSlice = createSlice({
       .addCase(adCampaignAccountAsync.fulfilled, (state: any, action: any) => {
         state.status = "succeeded";
         state.isAuthenticated = true;
-        state.adCampaignAccounts = action?.payload?.data?.data?.data;
+        let containsValue = true;
+        action?.payload?.data && action?.payload?.data?.data?.data.map((item: any) => {
+          if(state.adCampaignAccounts.length > 0){
+            state.adCampaignAccounts.map((adCampaignAccount: any) => {
+              if(item.id === adCampaignAccount.id) {
+                containsValue = false
+              }
+          })
+          }
+        
+          if(containsValue){
+            state.adCampaignAccounts.push(item);
+          }
+        })
+        console.log('action?.payload?.data ', action?.payload?.data?.data?.data, action?.payload?.data && action?.payload?.data?.data && action?.payload?.data?.data?.data.length > 0  )
+        state.adCampaignAccounts = action?.payload?.data && action?.payload?.data?.data && action?.payload?.data?.data?.data.length > 0 ? state.adCampaignAccounts: [];
       })
       .addCase(adCampaignAccountAsync.rejected, (state: any, action: any) => {
         state.status = "failed";

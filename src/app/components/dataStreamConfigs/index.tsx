@@ -79,11 +79,8 @@ const DataStreamConfigsLisitng = () => {
     });
   };
 
-  const handleCancel = (id: any) => (event: any) => {
-    event.stopPropagation();
-    dispatch(deleteFacebookConfigAsync({ id: id })).then(() => {
-      fetchAllConfigs();
-    });
+  const handleCancel = () => {
+    setIsModal({ open: false, id: -1 });
   };
 
   const handleEdit = (data: any) => (event: any) => {

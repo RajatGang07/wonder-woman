@@ -12,11 +12,12 @@ import { adCampaignAccountAsync } from "../../redux/reducers/adCampaigns";
 import { setSelectedKeysInfo } from "../../redux/reducers/storeFacebookInfo";
 import { configCron, days, FIELDS } from "../constant";
 import { DOMAIN_URL } from "../../services";
+import Modal from "../Modal";
 
 export default function Attribute() {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const [isModal, setIsModal] = useState({ open: false, id: -1 });
   const [fieldList, setFieldList] = useState<any>({});
   const [options, setOptions] = useState({
     accounts: [],
@@ -119,20 +120,18 @@ export default function Attribute() {
   }, [adAccounts]);
 
   useEffect(() => {
-    if (adCampaignAccounts?.length > 0) {
       fetchAdCampaignsAccount();
-    }
   }, [adCampaignAccounts]);
 
   const fetchAdCampaignsAccount = async () => {
     const data: any = [];
-    adCampaignAccounts.map((adCampaignAccount: any) => {
+    adCampaignAccounts && adCampaignAccounts.length > 0 ? adCampaignAccounts.map((adCampaignAccount: any) => {
       data.push({
         label: `${adCampaignAccount?.name} (${adCampaignAccount?.id})`,
         value: adCampaignAccount?.id,
         id: adCampaignAccount?.id,
       });
-    });
+    }) : [];
     await dispatch(
       setSelectedKeysInfo({
         ...selectedKeys,
@@ -143,6 +142,10 @@ export default function Attribute() {
       ...options,
       campaigns: data,
     });
+
+    if(data.length === 0 ){
+      setIsModal({ open: true, id: 0 })
+    }
   };
 
   const onHandleAccountsChange = async (selected: any) => {
@@ -156,14 +159,13 @@ export default function Attribute() {
       })
     );
 
-    const params = {
-      userId: JSON?.parse(userData)?.userId,
-      actId: selected?.value,
-      field: "name",
-      fbEmail: fbEmail
-    };
-
-    dispatch(adCampaignAccountAsync(params));
+      const params = {
+        userId: JSON?.parse(userData)?.userId,
+        actId: selected[selected.length - 1]?.value,
+        field: "name",
+        fbEmail: fbEmail
+      }
+      dispatch(adCampaignAccountAsync(params));
   };
 
   useEffect(() => {
@@ -219,6 +221,15 @@ export default function Attribute() {
     router.push("/create-data-stream/preview");
   };
 
+  const handleConfirm = async () => {
+    router.push("/create-data-stream/source");
+  };
+
+  const handleCancel = async () => {
+    setIsModal({ open: false, id: -1 })
+  };
+
+  console.log(selectedKeys, 'selectedKeys')
   return (
     <div className="flex justify-between flex-col pb-8 gap-4">
       <div className="flex justify-between items-center mb-6">
@@ -230,6 +241,7 @@ export default function Attribute() {
           className={`bg-transparent  hover:bg-secondary text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary hover:border-transparent rounded ${
             selectedKeys?.account === "" ? " opacity-50 cursor-not-allowed" : ""
           }`}
+          disabled={selectedKeys?.campaign.length === 0 }
         >
           Next
         </button>
@@ -255,7 +267,7 @@ export default function Attribute() {
                 isMulti
               />
           </div>
-          {selectedKeys.account && (
+          {selectedKeys.account && selectedKeys.account.length > 0 && (
             <>
               <div className="grid grid-cols gap-4">
                   <label>Campaigns*</label>
@@ -267,7 +279,8 @@ export default function Attribute() {
                     isDisabled={isView ? isView : isEdit ? !isEdit : false}
                   />
               </div>
-
+{selectedKeys?.campaign.length > 0 ?
+  <>
               <div className="grid grid-cols gap-4">
                   <label>Ad Insights</label>
 
@@ -416,6 +429,10 @@ export default function Attribute() {
                   This config will be executed on last day of the month
                 </span>
               )}
+</>
+:       isModal.open && <Modal handleCancel={handleCancel} handleDelete={handleConfirm} title="No Campaign Found" text="Try with different Account" buttonText1="Okay" />
+
+          }
             </>
           )}
         </>

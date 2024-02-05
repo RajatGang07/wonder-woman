@@ -1,6 +1,13 @@
 import React from "react";
 
-const Modal = ({handleDelete, handleCancel}: any) => {
+const Modal = ({
+  handleDelete,
+  handleCancel,
+  title = " Delete account",
+  text = " Are you sure you want to delete your account? All of your data will be permanently removed. This action cannot be undone.",
+  buttonText1 = "Delete",
+  buttonText2 = "Cancel",
+}: any) => {
   return (
     <div
       className="relative z-10"
@@ -36,14 +43,10 @@ const Modal = ({handleDelete, handleCancel}: any) => {
                     className="text-base font-semibold leading-6 text-gray-900"
                     id="modal-title"
                   >
-                    Delete account
+                    {title}
                   </h3>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Are you sure you want to delete your account? All of
-                      your data will be permanently removed. This action cannot
-                      be undone.
-                    </p>
+                    <p className="text-sm text-gray-500">{text}</p>
                   </div>
                 </div>
               </div>
@@ -54,14 +57,14 @@ const Modal = ({handleDelete, handleCancel}: any) => {
                 onClick={handleDelete}
                 className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
               >
-                Delete
+                {buttonText1}
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
               >
-                Cancel
+                {buttonText2}
               </button>
             </div>
           </div>
