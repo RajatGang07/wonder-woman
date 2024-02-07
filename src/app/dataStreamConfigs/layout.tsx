@@ -8,7 +8,7 @@ const DataStream = ({ children }: any) => {
     <div>
       <NavBar />
       <div className="flex gap-12">
-        <div className="w-[15%] h-[100vh] sticky top-0">
+        <div className="min-w-[250px] w-[250px] h-[100vh] sticky top-0">
           <Sidebar />
         </div>
         <div className="w-[80%] mt-8">
