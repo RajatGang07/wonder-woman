@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { facebookConfigAsync } from "../../redux/reducers/saveFacebookConfig";
 
@@ -30,6 +31,18 @@ export default function ShowPreview() {
       setCSVTable(creativeLevelResponse?.data?.response);
   
     } catch (err: any) {
+      if(!err?.response?.data?.status){
+        toast.error(err?.response?.data?.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
       console.log(err)
     }
     finally{

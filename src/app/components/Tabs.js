@@ -76,7 +76,7 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
             </div>
             <div className="relative">
               <div
-                onClick={handleNavigate("/create-data-stream/schedule")}
+                // onClick={handleNavigate("/create-data-stream/schedule")}
                 className="flex items-center pb-4  gap-x-1  justify-center text-sm font-semibold leading-6  text-black hover:text-secondary hover:border-gray-300 "
               >
                 Preview
